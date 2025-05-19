@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cardFacil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/toast.css">
+    {{{_sections.head}}}
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="/">
+                    <i class="fas fa-utensils"></i> 
+                    <span>card</span>Fácil
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    {{{_sections.headerLinks}}}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {{{body}}}
+        <div id="toast" class="toast">
+            <div class="toast-content">
+                <i class="fas fa-check-circle"></i>
+                <span id="toast-message">Prato cadastrado com sucesso!</span>
+            </div>
+        </div>
+    </main>
+    <!-- Toast Notification (será mostrada via JavaScript) -->
+    {{{_sections.script}}}
+</body>
+</html>

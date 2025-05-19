@@ -1,0 +1,25 @@
+/* Estilo do Toast */
+.toast {
+    position: fixed;
+    bottom: -100px; /* Começa escondido */
+    right: 20px;
+    background: #FF7A33;
+    color: #1a1a1a;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    transition: bottom 0.5s ease-in-out;
+}
+
+.toast.show {
+    bottom: 20px; /* Aparece na tela */
+}
+
+.toast i {
+    font-size: 1.5rem;
+}

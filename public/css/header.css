@@ -1,0 +1,143 @@
+:root {
+    --dark-bg: linear-gradient(135deg, #1a1a1a 0%, #2e2e2e 100%);
+    --orange-accent: #FF7A33;
+    --light-text: #f5f5f5;
+    --hover-orange: #FF9040;
+    --glow: 0 0 15px rgba(255, 122, 51, 0.5);
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+/* Efeito de "cascata" no header */
+header {
+    width: 100%;
+    background: var(--dark-bg);
+    padding: 1.2rem 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 100;
+}
+
+/* Barra laranja sutil no topo */
+header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--orange-accent);
+    background: linear-gradient(90deg, transparent 0%, var(--orange-accent) 50%, transparent 100%);
+}
+
+/* Reset de margens padrão do body e html */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/* Header ocupando 100% da largura */
+header {
+    width: 100%;
+    background: var(--dark-bg);
+    padding: 1.2rem 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+/* Container interno centralizado */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; /* Largura máxima do conteúdo */
+    margin: 0 auto; /* Centraliza o container */
+    padding: 0 20px; /* Espaçamento interno (opcional) */
+}
+
+/* Logo Estilizado */
+.logo a {
+    color: var(--light-text);
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.3s;
+}
+
+.logo a:hover {
+    transform: scale(1.05);
+}
+
+.logo span {
+    color: var(--orange-accent);
+    font-weight: 700;
+}
+
+.logo i {
+    color: var(--orange-accent);
+    font-size: 1.5rem;
+}
+
+nav ul {
+    display: flex;
+    gap: 1.8rem;
+    list-style: none;
+}
+
+nav a {
+    color: var(--light-text);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    transition: all 0.3s;
+}
+
+nav a:hover {
+    color: var(--light-text);
+    background: rgba(255, 122, 51, 0.2);
+    box-shadow: var(--glow);
+}
+
+nav a i {
+    font-size: 1.1rem;
+}
+
+nav li:first-child a {
+    background: rgba(255, 122, 51, 0.3);
+    border: 1px solid var(--orange-accent);
+}
+
+nav li:first-child a:hover {
+    background: rgba(255, 122, 51, 0.5);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.8rem;
+    }
+
+    nav a {
+        padding: 0.5rem 0.8rem;
+        font-size: 1rem;
+    }
+}
