@@ -1,9 +1,9 @@
 const express = require('express')
 const expressHandlebars = require('express-handlebars')
 const multiparty = require('multiparty')
+const path = require('path')
 
 const handlers = require('./lib/handlers')
-const { parse } = require('path')
 const port = 3000
 
 const app = express()
@@ -21,6 +21,7 @@ const hbs = expressHandlebars.create({
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', handlers.home)
@@ -46,6 +47,8 @@ app.post('/api/cadastro-pratos', (req, res) => {
         handlers.api.cadastrarPratos(req, res, fields, files)
     })
 })
+
+app.get('/cardapio/:name', handlers.cardapio)
 
 if(require.main === module){
     app.listen(port, () => {
