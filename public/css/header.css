@@ -10,6 +10,9 @@ html, body {
     padding: 0;
     width: 100%;
 }
+body{
+    background-color: rgba(47, 47, 47, 0.9);;
+}
 /* Efeito de "cascata" no header */
 header {
     width: 100%;

@@ -14,6 +14,9 @@ const hbs = expressHandlebars.create({
             if(!this._sections)this._sections={}
             this._sections[name] = options.fn(this)
             return null
+        },
+        lowerReplace: function(name){
+            return name.toLowerCase().replace(/\s+/g, "")
         }
     }
 });
@@ -47,6 +50,7 @@ app.post('/api/cadastro-pratos', (req, res) => {
         handlers.api.cadastrarPratos(req, res, fields, files)
     })
 })
+app.get('/restaurantes', handlers.restaurantes)
 
 app.get('/cardapio/:name', handlers.cardapio)
 

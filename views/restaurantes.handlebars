@@ -1,0 +1,107 @@
+{{#section "headerLinks"}}
+    <li><a href="/#">Sou proprietario</a></li>
+    <li><a href="/#">Sobre</a></li>
+    <li><a href="/#">Cardapio</a></li>
+{{/section}}
+<div class="menu-links-container">
+    {{#each result}}
+    <div class="menu-link-item">
+        <a href="/cardapio/{{lowerReplace nome}}_{{id}}" class="menu-link">
+            <i class="fas fa-utensils link-icon"></i>
+            <div class="link-text-container">
+                <span class="link-text-main">{{nome}}</span>
+                <span class="link-text-sub">{{username}}</span>
+            </div>
+            <i class="fas fa-chevron-right link-arrow"></i>
+        </a>
+    </div>
+    {{/each}}
+</div>
+
+<style>
+    /* Container principal */
+    .menu-links-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    /* Itens do menu */
+    .menu-link-item {
+        margin-bottom: 0.5rem;
+        border-radius: 6px;
+        overflow: hidden;
+        background: rgba(40, 40, 40, 0.7);
+        transition: all 0.3s ease;
+    }
+
+    .menu-link-item:hover {
+        background: rgba(255, 122, 51, 0.1);
+        transform: translateX(5px);
+    }
+
+    /* Links */
+    .menu-link {
+        display: flex;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        text-decoration: none;
+        color: #f5f5f5;
+    }
+
+    /* Container de texto */
+    .link-text-container {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Texto principal */
+    .link-text-main {
+        font-weight: 500;
+        margin-bottom: 2px;
+    }
+
+    /* Texto secundário */
+    .link-text-sub {
+        font-size: 0.8rem;
+        color: #aaa;
+        font-weight: 400;
+    }
+
+    /* Ícones */
+    .link-icon {
+        color: #FF7A33;
+        margin-right: 1rem;
+        font-size: 1.1rem;
+        width: 20px;
+        text-align: center;
+    }
+
+    /* Seta */
+    .link-arrow {
+        color: #666;
+        font-size: 0.9rem;
+        transition: all 0.3s;
+    }
+
+    .menu-link:hover .link-arrow {
+        color: #FF7A33;
+        transform: translateX(3px);
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+        .menu-link {
+            padding: 0.8rem 1rem;
+        }
+        
+        .link-text-main {
+            font-size: 0.95rem;
+        }
+        
+        .link-text-sub {
+            font-size: 0.75rem;
+        }
+    }
+</style>
