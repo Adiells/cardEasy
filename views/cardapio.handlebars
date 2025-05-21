@@ -3,6 +3,23 @@
     <li><a href="/#">Sobre</a></li>
     <li><a href="/admin/cadastro-pratos">Adicionar pedidos</a></li>
 {{/section}}
+<section class="restaurante-info" style="background: rgba(47, 47, 47, 0.7); backdrop-filter: blur(5px);">
+    <div class="restaurante-header">
+        <div class="restaurante-foto">
+            <img src="/uploads/Restaurante1/bife_acebolado_1747690888618.png" alt="teste">{{!foto teste, lembrar de alterar e deixar dinamico}}
+        </div>
+        <div class="restaurante-detalhes">
+            <h1>nome</h1>{{!lembrar de colocar conteudo dinamico aqui}}
+            <p class="restaurante-username">@{{!restaurante.username}}username</p>
+            {{!-- <div class="restaurante-meta">
+                <span><i class="fas fa-star"></i> 4.8 (256 avaliações)</span>
+                <span><i class="fas fa-clock"></i> Aberto agora</span>
+                <span><i class="fas fa-tag"></i> {{!restaurante.categoria}}categoria</span>
+            </div> --}}
+        </div>
+    </div>
+    <p class="restaurante-descricao">{{!restaurante.descricao}}descricao</p>
+</section>
 <div class="menu-grid">
     {{#each result}}
     <div class="menu-item">
@@ -125,6 +142,68 @@
     .action-btn i {
         font-size: 0.8rem;
     }
+    .restaurante-info {
+        padding: 2rem;
+        margin: 0 auto;
+        max-width: 1200px;
+        border-radius: 0 0 10px 10px;
+        border: 1px solid #333;
+        border-top: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .restaurante-header {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .restaurante-foto {
+        width: 120px;
+        height: 120px;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 2px solid #FF7A33;
+    }
+
+    .restaurante-foto img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .restaurante-detalhes h1 {
+        color: #FF7A33;
+        margin: 0 0 0.3rem 0;
+        font-size: 1.8rem;
+    }
+
+    .restaurante-username {
+        color: #aaa;
+        margin: 0 0 1rem 0;
+        font-size: 0.9rem;
+    }
+
+    .restaurante-meta {
+        display: flex;
+        gap: 1.5rem;
+        color: #ddd;
+        font-size: 0.9rem;
+    }
+
+    .restaurante-meta i {
+        color: #FF7A33;
+        margin-right: 0.3rem;
+    }
+
+    .restaurante-descricao {
+        color: #ccc;
+        line-height: 1.6;
+        padding-top: 1rem;
+        border-top: 1px solid #333;
+        margin: 1rem 0 0 0;
+    }
 
     /* Responsividade */
     @media (max-width: 768px) {
@@ -135,6 +214,69 @@
         
         .item-image {
             height: 140px;
+        }
+        .restaurante-header {
+        flex-direction: row; /* Mantém lado a lado */
+        gap: 1.5rem;
+        align-items: flex-start; /* Alinhamento superior */
+        }
+
+        .restaurante-foto {
+            width: 80px;
+            height: 80px;
+            min-width: 80px; /* Evita compressão */
+        }
+
+        .restaurante-detalhes {
+            flex: 1;
+            overflow: hidden; /* Previne vazamento */
+        }
+
+        .restaurante-detalhes h1 {
+            font-size: 1.4rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .restaurante-username {
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .restaurante-meta {
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            row-gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .restaurante-descricao {
+            font-size: 0.9rem;
+            margin-top: 1.2rem;
+        }
+    }
+
+    /* Ajuste extra para telas muito pequenas */
+    @media (max-width: 480px) {
+        .restaurante-header {
+            gap: 1rem;
+        }
+
+        .restaurante-foto {
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+            border-width: 1px;
+        }
+
+        .restaurante-meta span {
+            display: flex;
+            align-items: center;
+        }
+
+        .restaurante-meta i {
+            font-size: 0.7rem;
         }
     }
 </style>
