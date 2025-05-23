@@ -86,7 +86,7 @@ function processFormRequest(formId, apiRouter, successMessage, fieldNamesArray, 
     formId.addEventListener('submit', evt => {
         evt.preventDefault()
         let body
-        let headers = {'Content-Type': 'application/json'}
+        let headers = {}
         if(!multiparty){
             const dataObject = {};
             form = evt.target
@@ -100,6 +100,7 @@ function processFormRequest(formId, apiRouter, successMessage, fieldNamesArray, 
                 })
             }
             body = JSON.stringify(dataObject)
+            headers['Content-Type'] = 'application/json'
             console.log(body)
         }else{
             body = new FormData(evt.target)
