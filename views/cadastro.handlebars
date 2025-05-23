@@ -1,0 +1,199 @@
+<div class="registration-container" id="formContainer">
+    <form class="registration-form" role="form" id="cadastroForm">
+        <h2>Criar Conta</h2>
+        <p class="subtitle">Junte-se a nós e comece agora mesmo!</p>
+
+        <div class="form-group">
+            <label for="name">Nome Completo</label>
+            <input type="text" id="name" name="name" placeholder="Nome do seu estabelecimento" required>
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Exemplo: restaurante" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password" placeholder="Crie uma senha forte" required>
+            <small id="passwordHelp">Mínimo de 8 caracteres, com letras e números.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="confirm-password">Confirmar Senha</label>
+            <input type="password" id="confirm-password" name="confirmPassword" placeholder="Repita a senha" required>
+        </div>
+
+        <button type="submit" class="btn-submit" id="btn-submit">Cadastrar</button>
+
+        <p class="login-link">Já tem uma conta? <a href="/login">Faça Login</a></p>
+    </form>
+</div>
+
+<style>
+    /* As variáveis --dark-bg, --orange-accent, --light-text, --hover-orange, 
+       --glow, --input-bg, --input-border, --input-focus-border, --placeholder-text 
+       são assumidas como já definidas e importadas pelo layout principal. */
+
+    .registration-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 80px); /* Ajuste 80px conforme a altura do seu header */
+        padding: 40px 20px;
+        background-color: rgba(47, 47, 47, 0.9); 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .registration-form {
+        background: var(--dark-bg);
+        padding: 30px 40px;
+        border-radius: 10px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        width: 100%;
+        max-width: 480px;
+        color: var(--light-text);
+        border-top: 3px solid var(--orange-accent);
+    }
+
+    .registration-form h2 {
+        color: var(--light-text);
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 2.2rem;
+        font-weight: 700;
+    }
+
+    .registration-form .subtitle {
+        text-align: center;
+        margin-bottom: 30px;
+        color: var(--light-text);
+        opacity: 0.8;
+        font-size: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--light-text);
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="password"] {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid var(--input-border, #444);
+        border-radius: 6px;
+        background-color: var(--input-bg, #2e2e2e);
+        color: var(--light-text);
+        font-size: 1rem;
+        box-sizing: border-box; 
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-group input[type="text"]::placeholder,
+    .form-group input[type="email"]::placeholder,
+    .form-group input[type="password"]::placeholder {
+        color: var(--placeholder-text, #888);
+        opacity: 0.7;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group input[type="email"]:focus,
+    .form-group input[type="password"]:focus {
+        outline: none;
+        border-color: var(--input-focus-border, var(--orange-accent));
+        box-shadow: 0 0 8px rgba(255, 122, 51, 0.3);
+    }
+
+    .form-group small {
+        display: block;
+        margin-top: 5px;
+        font-size: 0.8rem;
+        color: var(--light-text);
+        opacity: 0.7;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 12px 15px;
+        background-color: var(--orange-accent);
+        color: white; 
+        border: none;
+        border-radius: 6px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        margin-top: 10px; 
+    }
+
+    .btn-submit:hover {
+        background-color: var(--hover-orange);
+        box-shadow: var(--glow);
+    }
+
+    .login-link {
+        text-align: center;
+        margin-top: 25px;
+        font-size: 0.95rem;
+        color: var(--light-text);
+    }
+
+    .login-link a {
+        color: var(--orange-accent);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .login-link a:hover {
+        text-decoration: underline;
+        color: var(--hover-orange);
+    }
+    .notEqual {
+        border-color: red !important;
+    }
+    .validPass {
+        border-color: green !important;
+    }
+
+    /* Responsividade para o formulário */
+    @media (max-width: 520px) {
+        .registration-form {
+            padding: 25px 20px;
+        }
+
+        .registration-form h2 {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+{{#section 'script'}}
+    <script>
+        const formId = document.getElementById('cadastroForm')
+        const apiRouter = '/api/cadastro'
+        const sucessMessage = 'Prato cadastrado com sucesso'
+
+        const fieldPass = document.getElementById('password')
+        const fieldConfirmPass = document.getElementById('confirm-password')
+        const button = document.getElementById('btn-submit')
+        console.log('fora da funcao chegou')
+        const campos =  ['name', 'username', 'password', 'confirm-password']
+        
+        const passwordHelpText = document.getElementById('passwordHelp');
+        const defaultPasswordHelpMessage = "Mínimo de 8 caracteres, com letras e números.";
+
+        
+        fieldPass.addEventListener('input', validatePassword)
+        fieldConfirmPass.addEventListener('input', validatePassword)
+        processFormRequest(formId, apiRouter, sucessMessage, campos)
+    </script>
+{{/section}}

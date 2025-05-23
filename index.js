@@ -26,8 +26,17 @@ app.set('view engine', 'handlebars');
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(__dirname + '/public'))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 app.get('/', handlers.home)
+
+app.get('/cadastro', handlers.cadastro)
+app.post('/api/cadastro', (req, res) => {
+    console.log(req.body)
+    res.status(201).json({ message: 'tadandocerto'})
+})
 
 app.get('/admin/cadastro-pratos', handlers.cadastrarPratos)
 app.post('/api/cadastro-pratos', (req, res) => {

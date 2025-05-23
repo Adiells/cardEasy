@@ -144,43 +144,10 @@
 </style>
 {{#section 'script'}}
     <script>
-        document.getElementById('cardapioForm')
-         .addEventListener('submit', evt => {
-            evt.preventDefault()
-            const body = new FormData(evt.target)
-            const container = document.getElementById('formContainer')
-            fetch('/api/cadastro-pratos', {method: 'POST', body})
-             .then(resp => {
-                if(!resp.ok){
-                    throw new Error(`Request failed with status ${resp.status}`)
-                }
-                return resp.json()
-             })
-             .then(json => {
-                showToast('Prato cadastrado com sucesso!')
-                document.getElementById('cardapioForm').reset()
-             })
-             .catch(err => {
-                console.log('deu erro', err)
-                showToast(`Houve um erro ${err}`, true)
-             })
-         })
-
-        function showToast(message, isError = false) {
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toast-message');
-            
-            // Configura a mensagem e cor
-            toastMessage.textContent = message;
-            toast.style.background = isError ? '#ff3333' : '#FF7A33';
-            
-            // Mostra o toast
-            toast.classList.add('show');
-            
-            // Esconde após 3 segundos
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
+        const formId = document.getElementById('cardapioForm')
+        const container = document.getElementById('formContainer')
+        const apiRouter = '/api/cadastro-pratos'
+        const sucessMessage = 'Prato cadastrado com sucesso'
+        processFormRequest(formId, container, apiRouter, sucessMessage)
     </script>
 {{/section}}
