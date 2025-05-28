@@ -20,7 +20,14 @@
             </div>
             <nav>
                 <ul>
-                    {{{_sections.headerLinks}}}
+                    {{#if _sections.headerLinks}}
+                        {{{_sections.headerLinks}}}
+                    {{else}}
+                        <li><a href="/cadastro">Sou propietario</a></li>
+                        <li><a href="/restaurantes">Restaurantes</a></li>
+                        <li><a href="/restaurante/cadastro-pratos">Adicionar pedidos</a></li>
+                    {{/if}}
+
                 </ul>
             </nav>
         </div>

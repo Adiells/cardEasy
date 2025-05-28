@@ -1,0 +1,37 @@
+{{#each user}}
+<ul>
+    <li class="element" data-id="{{id}}" data-username="{{username}}" style="color: white;">{{username}} id: {{id}}
+        <span class="bin" data-id="{{id}}" data-username="{{username}}" style="color: var(--orange-accent); cursor: pointer">&#x1F5D1</span>
+    </li>
+</ul>
+{{/each}}
+{{#section 'script'}}
+<script>
+    let btns = document.querySelectorAll('.bin')
+    btns.forEach((btn, index) => {
+        btn.addEventListener('click', () => {
+            let userId = btn.dataset.id
+            let username = btn.dataset.username
+            if(confirm(`Voce deseja mesmo deletar o usuario ${username}?`)){
+                fetch('/api/admin/deluser', {
+                method: 'post', 
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({userId})
+            })
+             .then(data => {
+                if(!data.ok){
+                    throw new Error('Houve um erro com status', data.status)
+                }
+                return data.json()
+             })
+             .then(data => {
+                console.log('serto')
+             })
+             .catch(err => {
+                console.log('erro', err)
+             })
+            }
+        })
+    })
+</script>
+{{/section}}

@@ -11,6 +11,7 @@
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Exemplo: restaurante" required>
+            <small id="usernameHelp">Não use espaços nem caracteres especiais</small>
         </div>
 
         <div class="form-group">
@@ -165,6 +166,24 @@
         border-color: green !important;
     }
 
+    .form-group input.validInput {
+        border-color: green !important; 
+    }
+
+    .form-group input.invalidInput {
+        border-color: red !important;
+    }
+
+    .form-group small.text-success {
+        color: green; 
+        opacity: 1;
+    }
+
+    .form-group small.text-danger {
+        color: red; 
+        opacity: 1;
+    }
+
     /* Responsividade para o formulário */
     @media (max-width: 520px) {
         .registration-form {
@@ -180,20 +199,33 @@
     <script>
         const formId = document.getElementById('cadastroForm')
         const apiRouter = '/api/cadastro'
-        const sucessMessage = 'Prato cadastrado com sucesso'
+        const sucessMessage = 'Usuário- cadastrado com sucesso'
 
         const fieldPass = document.getElementById('password')
         const fieldConfirmPass = document.getElementById('confirm-password')
         const button = document.getElementById('btn-submit')
         console.log('fora da funcao chegou')
-        const campos =  ['name', 'username', 'password', 'confirm-password']
+        const campos =  ['name', 'username', 'password']
+        const fieldUsername = document.getElementById('username');
+        const usernameHelpText = document.getElementById('usernameHelp');
+        const defaultUsernameHelpMessage = "Use apenas letras minúsculas, números, '.', e '_'. Sem espaços.";
         
         const passwordHelpText = document.getElementById('passwordHelp');
         const defaultPasswordHelpMessage = "Mínimo de 8 caracteres, com letras e números.";
+        let debounceTimer;
 
         
         fieldPass.addEventListener('input', validatePassword)
         fieldConfirmPass.addEventListener('input', validatePassword)
+        if (fieldUsername) {
+            fieldUsername.addEventListener('input', validateUsername);
+            validateUsername(); 
+        }
+        async function buttonDisabled(){
+            console.log(validatePassword(), await validateUsername())
+            button.disabled = await !(validatePassword() && await validateUsername())
+        }
+        formId.addEventListener('input', buttonDisabled)
         processFormRequest(formId, apiRouter, sucessMessage, campos)
     </script>
 {{/section}}

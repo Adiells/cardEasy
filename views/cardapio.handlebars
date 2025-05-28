@@ -1,7 +1,7 @@
 {{#section "headerLinks"}}
     <li><a href="/#">Sou propietario</a></li>
     <li><a href="/#">Sobre</a></li>
-    <li><a href="/admin/cadastro-pratos">Adicionar pedidos</a></li>
+    <li><a href="/restaurante/cadastro-pratos">Adicionar pedidos</a></li>
 {{/section}}
 <section class="restaurante-info" style="background: rgba(47, 47, 47, 0.7); backdrop-filter: blur(5px);">
     <div class="restaurante-header">
@@ -9,8 +9,8 @@
             <img src="/uploads/Restaurante1/bife_acebolado_1747690888618.png" alt="teste">{{!foto teste, lembrar de alterar e deixar dinamico}}
         </div>
         <div class="restaurante-detalhes">
-            <h1>nome</h1>{{!lembrar de colocar conteudo dinamico aqui}}
-            <p class="restaurante-username">@{{!restaurante.username}}username</p>
+            <h1>{{result.0.nome}}</h1>{{!lembrar de colocar conteudo dinamico aqui}}
+            <p class="restaurante-username">@{{result.0.username}}</p>
             {{!-- <div class="restaurante-meta">
                 <span><i class="fas fa-star"></i> 4.8 (256 avaliações)</span>
                 <span><i class="fas fa-clock"></i> Aberto agora</span>
@@ -20,6 +20,7 @@
     </div>
     <p class="restaurante-descricao">{{!restaurante.descricao}}descricao</p>
 </section>
+
 <div class="menu-grid">
     {{#each result}}
     <div class="menu-item">
@@ -41,7 +42,6 @@
     </div>
     {{/each}}
 </div>
-
 <style>
     .menu-grid {
         display: grid;

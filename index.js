@@ -2,8 +2,10 @@ const express = require('express')
 const expressHandlebars = require('express-handlebars')
 const multiparty = require('multiparty')
 const path = require('path')
+const db = require('./database/database')
 
 const handlers = require('./lib/handlers')
+const cadastro = require('./lib/cadastro')
 const port = 3000
 
 const app = express()
@@ -34,11 +36,36 @@ app.get('/', handlers.home)
 
 app.get('/cadastro', handlers.cadastro)
 app.post('/api/cadastro', (req, res) => {
-    console.log(req.body)
-    res.status(201).json({ message: 'tadandocerto'})
-})
+    const password = req.body.password
+    const name = req.body.name
+    const username = req.body.username
+    
 
-app.get('/admin/cadastro-pratos', handlers.cadastrarPratos)
+    if(!cadastro.isPasswordValid(password)) return res.status(500).json({err: 'sua senha não é usa senha válida'})
+    if(!cadastro.isUsernameValid(username)) return res.status(500).json({err: 'seu username não é um username valido'})
+    console.log(req.body)
+    if(name.length == 0 || name.length > 15) return res.status(500).json({err: 'seu nome é muito grande'})
+    handlers.api.cadastro(req, res)
+})
+app.get('/api/usuarios/verificar', handlers.api.usersVerify)
+
+app.get('/restaurante/cadastro-pratos', handlers.cadastrarPratos)
+app.get('/admin/deluser', (req, res) => {
+    const stmt = db.prepare('SELECT * FROM users');
+    let user = stmt.all()
+    res.render('admin/deluser', { user })
+})
+app.post('/api/admin/deluser', (req, res) => {
+    console.log(req.body)
+    try{
+        let stmt = db.prepare('DELETE FROM users WHERE id = ?')
+        stmt.run(req.body.userId)
+        console.log('Usuario deletado')
+    }catch(err){
+        console.log(`Houve um erro ao tentar deletar o usuario do banco de dados`)
+    }
+    res.status(201).json({teste: 'sim'})
+})
 app.post('/api/cadastro-pratos', (req, res) => {
     const form = new multiparty.Form()
     form.parse(req, (err, fields, files) => {
@@ -61,7 +88,7 @@ app.post('/api/cadastro-pratos', (req, res) => {
 })
 app.get('/restaurantes', handlers.restaurantes)
 
-app.get('/cardapio/:name', handlers.cardapio)
+app.get('/restaurantes/:name', handlers.cardapio)
 
 if(require.main === module){
     app.listen(port, () => {
@@ -70,3 +97,13 @@ if(require.main === module){
 }else{
     module.export = app
 }
+process.on('SIGINT', () => {
+    console.log('\nEncerrando o servidor...');
+    db.close();
+    console.log('Conexão com o banco fechada.');
+    process.exit();
+});
+
+process.on('exit', () => {
+    db.close();
+});
