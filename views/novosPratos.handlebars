@@ -3,6 +3,7 @@
     <li><a href="/#">Sobre</a></li>
     <li><a href="/#">Cardapio</a></li>
 {{/section}}
+{{#ifEq rota user}}
 <div class="form-container" id="formContainer">
     <h1><i class="fas fa-plus-circle"></i> Cadastrar Novo Prato</h1>
     
@@ -64,7 +65,24 @@
         </button>
     </form>
 </div>
-
+{{else}}
+    <div class="access-notice-container">
+        <div class="access-notice-icon">
+            <i class="fas fa-exclamation-triangle"></i> 
+        </div>
+        <h2>Acesso Restrito</h2>
+        
+        {{#if user}}
+            <p>Você está logado como <strong>{{user}}</strong>.</p>
+            <p>Se esta é a sua conta e você acredita que deveria ter acesso, verifique se o endereço (URL) está correto. Você pode tentar adicionar seus pratos por <a href="/{{user}}/cadastro-pratos" class="notice-link">este link direto</a>.</p>
+        {{else}}
+            <p>Parece que você não está logado ou não tem permissão para visualizar esta página diretamente.</p>
+            <p>Por favor, faça o login para continuar.</p>
+        {{/if}}
+        
+        <p><a href="/login" class="btn-redirect-login">Ir para a Página de Login</a></p>
+    </div>
+{{/ifEq}}
 <style>
     .form-container {
         max-width: 800px;
@@ -134,7 +152,80 @@
         background: #FF9040;
         transform: translateY(-2px);
     }
+    /* Estilos para o container de aviso de acesso */
+    .access-notice-container {
+        max-width: 600px;
+        margin: 4rem auto; /* Centraliza e dá um espaço acima/abaixo */
+        padding: 2.5rem 3rem;
+        background: var(--dark-bg, #1e1e1e); /* Usa sua variável ou um fallback */
+        border-radius: 10px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        color: var(--light-text, #f0f0f0);
+        text-align: center;
+        border-top: 3px solid var(--orange-accent, #FF7A33);
+        font-family: 'Poppins', sans-serif; /* Use a mesma fonte do seu formulário se desejar */
+    }
 
+    .access-notice-icon {
+        font-size: 3rem; /* Tamanho do ícone */
+        color: var(--orange-accent, #FF7A33);
+        margin-bottom: 1.5rem;
+    }
+
+    .access-notice-container h2 {
+        color: var(--light-text, #f0f0f0);
+        font-size: 1.8rem; /* Tamanho do título */
+        margin-bottom: 1.2rem;
+        font-weight: 700;
+    }
+
+    .access-notice-container p {
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+        color: #dcdcdc; /* Um cinza um pouco mais claro para o texto principal */
+    }
+
+    .access-notice-container p strong {
+        color: var(--orange-accent, #FF7A33); /* Destaca o nome do usuário */
+        font-weight: 600;
+    }
+
+    /* Estilo para links de texto dentro do aviso */
+    .access-notice-container .notice-link {
+        color: var(--orange-accent, #FF7A33);
+        text-decoration: none;
+        font-weight: 600;
+        border-bottom: 1px dashed transparent; /* Efeito sutil para o link */
+        transition: color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .access-notice-container .notice-link:hover {
+        color: var(--hover-orange, #FF9040); /* Sua variável de hover */
+        border-bottom-color: var(--hover-orange, #FF9040);
+        text-decoration: none;
+    }
+
+    /* Estilo para o link "Ir para Login" parecer um botão */
+    .access-notice-container .btn-redirect-login {
+        display: inline-block;
+        padding: 0.8rem 1.8rem;
+        background-color: var(--orange-accent, #FF7A33);
+        color: #1a1a1a; /* Texto escuro para contraste com o fundo laranja */
+        border: none;
+        border-radius: 5px;
+        font-weight: 700;
+        font-size: 1rem;
+        text-decoration: none;
+        margin-top: 1rem;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .access-notice-container .btn-redirect-login:hover {
+        background-color: var(--hover-orange, #FF9040);
+        color: #1a1a1a; /* Mantém a cor do texto no hover */
+        transform: translateY(-2px); /* Efeito de elevação sutil */
+    }
     small {
         display: block;
         margin-top: 0.3rem;
