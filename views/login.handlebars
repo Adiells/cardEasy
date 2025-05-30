@@ -1,0 +1,177 @@
+{{!-- login.handlebars --}}
+<div class="login-container" id="formContainer">
+    <form class="login-form" role="form" id="loginForm">
+        <h2>Entrar na Conta</h2>
+        <p class="subtitle">Bem-vindo de volta! Faça login para continuar.</p>
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Seu username" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password" placeholder="Sua senha" required>
+            {{!-- Futuramente, você pode adicionar um link "Esqueci minha senha" aqui se desejar --}}
+        </div>
+        {{#if errorMessage}}
+            <p class="form-error-message">{{errorMessage}}</p>
+        {{/if}}
+
+        <button type="submit" class="btn-submit" id="btnLogin">Entrar</button>
+
+        <p class="register-link">Não tenho uma conta? <a href="/cadastro">Cadastre-se</a></p>
+    </form>
+</div>
+
+<style>
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 80px); /* Ajuste 80px conforme a altura do seu header */
+        padding: 40px 20px;
+        background-color: rgba(47, 47, 47, 0.9); 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .login-form {
+        background: var(--dark-bg, #1e1e1e); /* Fallback se a variável não estiver definida */
+        padding: 30px 40px;
+        border-radius: 10px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        width: 100%;
+        max-width: 450px; /* Um pouco menor que o de cadastro, opcional */
+        color: var(--light-text, #f0f0f0);
+        border-top: 3px solid var(--orange-accent, #FF7A33);
+    }
+
+    .login-form h2 {
+        color: var(--light-text, #f0f0f0);
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 2.2rem;
+        font-weight: 700;
+    }
+
+    .login-form .subtitle {
+        text-align: center;
+        margin-bottom: 30px;
+        color: var(--light-text, #f0f0f0);
+        opacity: 0.8;
+        font-size: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 25px; /* Um pouco mais de espaço, opcional */
+        position: relative;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--light-text, #f0f0f0);
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="password"] {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid var(--input-border, #444);
+        border-radius: 6px;
+        background-color: var(--input-bg, #2e2e2e);
+        color: var(--light-text, #f0f0f0);
+        font-size: 1rem;
+        box-sizing: border-box; 
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-group input[type="text"]::placeholder,
+    .form-group input[type="password"]::placeholder {
+        color: var(--placeholder-text, #888);
+        opacity: 0.7;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group input[type="password"]:focus {
+        outline: none;
+        border-color: var(--input-focus-border, var(--orange-accent, #FF7A33));
+        box-shadow: 0 0 8px rgba(255, 122, 51, 0.3); /* Usando a cor laranja para o glow do foco */
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 12px 15px;
+        background-color: var(--orange-accent, #FF7A33);
+        color: white; 
+        border: none;
+        border-radius: 6px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        margin-top: 10px; 
+    }
+
+    .btn-submit:hover {
+        background-color: var(--hover-orange, #e0601a);
+        box-shadow: var(--glow, 0 0 15px rgba(255, 122, 51, 0.5));
+    }
+
+    .register-link { /* Renomeado de .login-link para .register-link para clareza */
+        text-align: center;
+        margin-top: 25px;
+        font-size: 0.95rem;
+        color: var(--light-text, #f0f0f0);
+    }
+
+    .register-link a {
+        color: var(--orange-accent, #FF7A33);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .register-link a:hover {
+        text-decoration: underline;
+        color: var(--hover-orange, #e0601a);
+    }
+    .form-error-message {
+    background-color: rgba(255, 82, 82, 0.1);
+    border: 1px solid var(--orange-accent, #FF7A33);
+    color: #FFCDD2;
+    padding: 12px 18px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    text-align: center;
+    line-height: 1.4;
+    }
+
+    .form-error-message::before {
+    content: "\f06a";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 10px;
+    color: var(--orange-accent, #FF7A33);
+    }
+
+    /* Responsividade similar à página de cadastro */
+    @media (max-width: 520px) {
+        .login-form {
+            padding: 25px 20px;
+        }
+
+        .login-form h2 {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+{{#section 'script'}}
+<script>
+    const formId = document.getElementById('loginForm')
+    processFormRequest(formId, '/api/login', 'Login realizado', ['username', 'password'])
+</script>
+{{/section}}
