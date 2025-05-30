@@ -1,5 +1,356 @@
+{{!-- home.handlebars --}}
 {{#section "headerLinks"}}
-    <li><a href="/cadastro">Sou propietario</a></li>
-    <li><a href="/restaurantes">Restaurantes</a></li>
-    <li><a href="/restaurante/cadastro-pratos">Adicionar pedidos</a></li>
+    <li><a href="/cadastro"><i class="fas fa-store"></i> Sou proprietário</a></li>
+    <li><a href="/restaurantes"><i class="fas fa-search-location"></i> Restaurantes</a></li>
+{{/section}}
+
+<div class="home-page-container-v3">
+
+    <section class="hero-section-v3">
+        <div class="hero-content-v3">
+            <h1>Bem-vindo ao <span>card</span>Fácil!</h1>
+            <p class="subtitle-v3">A maneira mais simples e elegante de apresentar seu cardápio ou descobrir novos sabores.</p>
+            <div class="hero-cta-v3">
+                <a href="/cadastro" class="btn-v3 btn-primary-v3">Quero criar meu cardápio! <i class="fas fa-angle-right"></i></a>
+                <a href="/restaurantes" class="btn-v3 btn-outline-v3">Ver restaurantes <i class="fas fa-search"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-cardfacil-section">
+        <h2 class="section-title-v3">Por que o <span>card</span>Fácil?</h2>
+        <div class="why-grid">
+            <div class="why-item">
+                <div class="why-item-icon">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <h3>Edição Simples e Rápida</h3>
+                <p>Atualize seu cardápio digitalmente em instantes, adicione fotos, mude preços e descrições sem complicações.</p>
+            </div>
+            <div class="why-item">
+                <div class="why-item-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Moderno e Acessível</h3>
+                <p>Seus clientes acessam o cardápio de qualquer celular via QR Code ou link, proporcionando uma experiência inovadora.</p>
+            </div>
+            <div class="why-item">
+                <div class="why-item-icon">
+                    <i class="fas fa-share-alt"></i>
+                </div>
+                <h3>Fácil de Compartilhar</h3>
+                <p>Divulgue seu cardápio online facilmente, ampliando seu alcance e atraindo mais clientes para seu estabelecimento.</p>
+            </div>
+            <div class="why-item">
+                <div class="why-item-icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <h3>Visual Atraente</h3>
+                <p>Apresente seus pratos de forma organizada e visualmente apetitosa, valorizando cada item do seu menu.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works-section-v3">
+        <h2 class="section-title-v3">Comece em <span>Minutos!</span></h2>
+        <div class="steps-container-v3">
+            <div class="step-item-v3">
+                <span class="step-number-v3">1</span>
+                <h4>Cadastre-se</h4>
+                <p>Proprietários criam sua conta de forma rápida e segura.</p>
+            </div>
+            <div class="step-item-v3">
+                <span class="step-number-v3">2</span>
+                <h4>Monte seu Cardápio</h4>
+                <p>Adicione pratos, descrições e fotos com nossa interface intuitiva.</p>
+            </div>
+            <div class="step-item-v3">
+                <span class="step-number-v3">3</span>
+                <h4>Compartilhe!</h4>
+                <p>Disponibilize seu cardápio online e para seus clientes no local.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="final-cta-section-v3">
+        <h2 class="section-title-v3">Pronto para <span>Digitalizar</span> seu Negócio?</h2>
+        <p>Junte-se aos restaurantes que estão inovando com o cardFácil.</p>
+        <div class="hero-cta-v3">
+            <a href="/cadastro" class="btn-v3 btn-primary-v3 btn-large-v3">Criar Meu Cardápio Grátis</a>
+        </div>
+    </section>
+
+</div>
+
+<style>
+    /* Suas variáveis CSS globais (usarei as que você forneceu)
+    :root {
+        --dark-bg: linear-gradient(135deg, #1a1a1a 0%, #2e2e2e 100%);
+        --orange-accent: #FF7A33;
+        --light-text: #f5f5f5;
+        --hover-orange: #FF9040;
+        --glow: 0 0 15px rgba(255, 122, 51, 0.5);
+    }
+    */
+    /* Cores sólidas derivadas para uso prático */
+    :root {
+        --solid-dark-bg-1: #1a1a1a;
+        --solid-dark-bg-2: #2e2e2e; 
+        --border-color-medium: #4a4a4a;
+        --text-secondary: #b0b0b0;
+    }
+
+    .home-page-container-v3 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--light-text);
+        background-color: var(--solid-dark-bg-1);
+    }
+
+    .section-title-v3 {
+        font-size: 2.6rem;
+        font-weight: 700;
+        color: var(--light-text);
+        text-align: center;
+        margin-bottom: 2.5rem; /* Reduzido um pouco */
+        padding-top: 3.5rem;
+        padding-bottom: 1rem; /* Adicionado para dar respiro */
+    }
+    .section-title-v3 span {
+        color: var(--orange-accent);
+    }
+
+    /* Hero Section v3 */
+    .hero-section-v3 {
+        min-height: 60vh; /* Altura um pouco menor */
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Centralizar conteúdo */
+        padding: 3rem 2rem;
+        background: var(--dark-bg); /* Seu gradiente */
+        text-align: center; /* Centralizar texto */
+        border-bottom: 3px solid var(--orange-accent);
+    }
+    .hero-content-v3 {
+        max-width: 700px;
+    }
+    .hero-section-v3 h1 {
+        font-size: clamp(2.8rem, 6vw, 4rem);
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    .hero-section-v3 h1 span {
+        color: var(--orange-accent);
+    }
+    .hero-section-v3 .subtitle-v3 {
+        font-size: clamp(1.1rem, 3vw, 1.3rem);
+        color: var(--text-secondary);
+        margin-bottom: 2.5rem;
+        line-height: 1.6;
+    }
+    .hero-cta-v3 {
+        display: flex;
+        gap: 1rem;
+        justify-content: center; /* Centralizar botões */
+        flex-wrap: wrap;
+    }
+    .btn-v3 {
+        text-decoration: none;
+        padding: 12px 28px; /* Padding ajustado */
+        border-radius: 6px; 
+        font-weight: 600;
+        font-size: 1.05rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        border: 2px solid transparent;
+    }
+    .btn-primary-v3 {
+        background-color: var(--orange-accent);
+        color: white; /* Ajustado para branco para melhor contraste com laranja */
+        border-color: var(--orange-accent);
+    }
+    .btn-primary-v3:hover {
+        background-color: var(--hover-orange);
+        border-color: var(--hover-orange);
+        transform: scale(1.05);
+        box-shadow: var(--glow);
+    }
+    .btn-outline-v3 {
+        background-color: transparent;
+        color: var(--orange-accent);
+        border-color: var(--orange-accent);
+    }
+    .btn-outline-v3:hover {
+        background-color: var(--orange-accent);
+        color: white;
+        transform: scale(1.05);
+    }
+
+    /* Why cardFácil Section (Features) */
+    .why-cardfacil-section {
+        padding: 3.5rem 2rem;
+        background-color: var(--solid-dark-bg-2); /* Fundo um pouco diferente */
+    }
+    .why-grid {
+        display: grid;
+        /* Em telas menores, uma coluna */
+        grid-template-columns: 1fr;
+        gap: 2rem; /* Espaçamento entre os cards */
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+    .why-item {
+        background-color: var(--solid-dark-bg-1); /* Cor de card mais escura */
+        padding: 2.5rem 2rem; /* Mais padding interno */
+        border-radius: 8px;
+        text-align: center;
+        border: 1px solid var(--border-color-medium);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex; /* Para alinhar ícone e texto melhor */
+        flex-direction: column; /* Ícone acima, depois título, depois texto */
+        align-items: center; /* Centralizar conteúdo do card */
+    }
+    .why-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    }
+    .why-item-icon {
+        font-size: 2.2rem;
+        color: var(--orange-accent);
+        margin-bottom: 1.5rem;
+        width: 70px;
+        height: 70px;
+        line-height: 70px; /* Para centralizar ícone verticalmente se for font-size */
+        border-radius: 50%;
+        background-color: rgba(255, 122, 51, 0.1); /* Fundo sutil para o ícone */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .why-item h3 {
+        font-size: 1.3rem;
+        color: var(--light-text);
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+    }
+    .why-item p {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        flex-grow: 1; /* Para que todos os <p> tenham altura similar se os cards tiverem alturas fixas */
+    }
+
+    /* Media Queries para layout da grade "Why cardFácil?" */
+    @media (min-width: 600px) { /* Telas pequenas para médias: 2 colunas */
+        .why-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    @media (min-width: 992px) { /* Telas grandes: poderia ser 4 colunas ou manter 2x2 com mais espaçamento */
+        /* Se quiser 4 colunas em telas muito largas: */
+        /* .why-grid { grid-template-columns: repeat(4, 1fr); } */
+        /* Para manter 2x2 e mais "legal", podemos aumentar o gap ou o max-width do container */
+        .why-grid {
+            /* Mantém 2 colunas, mas o max-width garante que não fiquem muito esticados */
+        }
+    }
+
+
+    /* How It Works Section v3 */
+    .how-it-works-section-v3 {
+        padding: 3.5rem 2rem;
+        background-color: var(--solid-dark-bg-1);
+    }
+    .steps-container-v3 {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        margin-top: 1rem;
+    }
+    .step-item-v3 {
+        flex: 1;
+        min-width: 250px; /* Para responsividade */
+        max-width: 320px;
+        padding: 1.5rem;
+        background: var(--solid-dark-bg-2);
+        border-radius: 8px;
+        text-align: center;
+        position: relative;
+        border-bottom: 3px solid var(--orange-accent);
+    }
+    .step-number-v3 {
+        display: inline-block;
+        background-color: var(--orange-accent);
+        color: white;
+        font-size: 1.2rem;
+        font-weight: bold;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 50%;
+        margin-bottom: 1rem;
+        box-shadow: var(--glow);
+    }
+    .step-item-v3 h4 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        color: var(--light-text);
+    }
+    .step-item-v3 p {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+    }
+
+    /* Final CTA Section v3 */
+    .final-cta-section-v3 {
+        padding: 4rem 2rem;
+        text-align: center;
+        background: var(--dark-bg); /* Seu gradiente */
+    }
+    .final-cta-section-v3 h2 {
+        font-size: 2.4rem; /* Levemente menor que o título da seção normal */
+        margin-bottom: 1rem;
+    }
+    .final-cta-section-v3 p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        max-width: 650px;
+        margin: 0 auto 2rem auto;
+        line-height: 1.6;
+    }
+    .btn-large-v3 {
+        padding: 14px 35px !important; /* Ajuste para ser um pouco maior */
+        font-size: 1.15rem !important;
+    }
+
+    /* Responsividade Geral para seções (além das específicas da grade) */
+    @media (max-width: 768px) {
+        .section-title-v3 { font-size: 2.1rem; margin-bottom: 2rem; padding-top: 2.5rem; }
+        .hero-section-v3 { min-height: auto; padding: 2.5rem 1rem; }
+        .hero-section-v3 h1 { font-size: 2.2rem; }
+        .hero-section-v3 .subtitle-v3 { font-size: 1rem; }
+        .hero-cta-v3 { flex-direction: column; align-items: center; }
+        .hero-cta-v3 a.btn-v3 { width: 80%; max-width: 320px; text-align:center; justify-content:center; }
+        
+        .why-cardfacil-section, .how-it-works-section-v3, .final-cta-section-v3 { padding: 2.5rem 1rem; }
+        
+        .step-item-v3 {
+            min-width: 80%; /* Para que ocupem mais da largura em mobile */
+        }
+
+        .final-cta-section-v3 h2 { font-size: 2rem; }
+        .final-cta-section-v3 p { font-size: 1rem; }
+    }
+
+</style>
+
+{{#section 'script'}}
+    <script>
+        console.log('Página Home v3 (mais parecida com a anterior, "Why" melhorado) carregada!');
+    </script>
 {{/section}}
