@@ -18,18 +18,31 @@
                     <span>card</span>Fácil
                 </a>
             </div>
-            <nav>
+            <nav class="main-nav">
                 <ul>
                     {{#if _sections.headerLinks}}
                         {{{_sections.headerLinks}}}
                     {{else}}
                         <li><a href="/cadastro">Sou propietario</a></li>
                         <li><a href="/restaurantes">Restaurantes</a></li>
-                        <li><a href="/restaurante/cadastro-pratos">Adicionar pedidos</a></li>
                     {{/if}}
 
                 </ul>
             </nav>
+            <div class="hamburger-menu">
+                <button id="hamburger-icon" aria-label="Menu Principal" aria-expanded="false" aria-controls="dropdown-menu">
+                    <i class="fas fa-bars"></i> 
+                </button>
+                <div id="dropdown-menu" class="dropdown-content">
+                    {{#if user}} 
+                        <a href="/#">Meu Perfil ({{user.username}})</a> 
+                        <a href="/logout">Logout</a>
+                    {{else}}
+                        <a href="/login">Login</a>
+                        <a href="/cadastro">Cadastre-se</a>
+                    {{/if}}
+                </div>
+            </div>
         </div>
     </header>
 
@@ -38,7 +51,7 @@
         <div id="toast" class="toast">
             <div class="toast-content">
                 <i class="fas fa-check-circle"></i>
-                <span id="toast-message">Prato cadastrado com sucesso!</span>
+                <span id="toast-message">tumtarara</span>
             </div>
         </div>
     </main>

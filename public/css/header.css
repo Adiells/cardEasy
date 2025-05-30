@@ -60,6 +60,9 @@ header {
     margin: 0 auto; /* Centraliza o container */
     padding: 0 20px; /* Espaçamento interno (opcional) */
 }
+.header-container nav{
+    margin-right: 80px;
+}
 
 /* Logo Estilizado */
 .logo a {
@@ -125,6 +128,68 @@ nav li:first-child a:hover {
     background: rgba(255, 122, 51, 0.5);
 }
 
+/* .main-nav{
+
+} */
+.hamburger-menu{
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    z-index: 1010;
+    /* display: block; */
+}
+#hamburger-icon {
+    background: none;
+    border: none;
+    color: var(--light-text, #f0f0f0); /* Use sua variável de cor de texto claro */
+    font-size: 1.6rem; /* Ajuste o tamanho do ícone conforme necessário */
+    cursor: pointer;
+    padding: 0.5rem; /* Ajuste o padding para o toque */
+    display: block;
+}
+
+#hamburger-icon:hover,
+#hamburger-icon:focus {
+    color: var(--orange-accent, #FF7A33); /* Use sua variável de cor de destaque */
+    outline: none; /* Remove o outline padrão do foco em botões se desejar */
+}
+
+.dropdown-content {
+    display: none; /* Começa escondido */
+    position: absolute;
+    right: 0; /* Alinha à direita do container .hamburger-menu */
+    top: calc(100% + 5px); /* Posiciona abaixo do ícone com um pequeno espaço */
+    background-color: var(--orange-accent, #222); /* Cor de fundo escura */
+    min-width: 200px; /* Largura mínima */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+    z-index: 1000; /* Garante que fique sobre outros elementos */
+    border-radius: 5px;
+    border: 1px solid var(--input-border, #444); /* Borda sutil */
+}
+
+/* Classe para mostrar o dropdown via JavaScript */
+.dropdown-content.show {
+    display: block;
+}
+
+.dropdown-content a {
+    color: var(--light-text, #f0f0f0);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-content a:not(:last-child) {
+     border-bottom: 1px solid var(--input-border, #444); /* Linha separadora */
+}
+
+.dropdown-content a:hover {
+    background-color: var(--hover-orange, #FF7A33);
+    color: var(--dark-bg, white); /* Texto escuro ou branco no hover laranja */
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
     .header-container {
@@ -142,5 +207,11 @@ nav li:first-child a:hover {
     nav a {
         padding: 0.5rem 0.8rem;
         font-size: 1rem;
+    }
+    /* .main-nav {
+        display: none; 
+    } */
+    .hamburger-menu {
+        display: block; 
     }
 }

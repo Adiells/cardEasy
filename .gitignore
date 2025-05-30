@@ -5,4 +5,5 @@ database/
 Thumbs.db
 tmp/
 *.tmp
+*.env
 suport.js

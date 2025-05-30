@@ -171,15 +171,19 @@ function processFormRequest(formId, apiRouter, successMessage, fieldNamesArray, 
         }
         fetch(apiRouter, {method: 'POST', body, headers: headers})
             .then(resp => {
-                console.log('chegou na promisse')
-                if(!resp.ok){
-                    throw new Error(`Request failed with status ${resp.status}`)
-                }
                 return resp.json()
+                .then(json => {
+                    if(!resp.ok){
+                        throw new Error(json.err || `Erro desconhecido com status ${resp.status}`)
+                    }
+                    return json
+                })
             })
             .then(json => {
-                console.log('teste no utils')
                 showToast(successMessage)
+                if(json.redirect){
+                    window.location.href = json.redirect
+                }
                 formId.reset()
             })
             .catch(err => {
@@ -188,3 +192,27 @@ function processFormRequest(formId, apiRouter, successMessage, fieldNamesArray, 
             })
     })
 }
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+
+    if (hamburgerIcon && dropdownMenu) {
+        hamburgerIcon.addEventListener('click', function(event) {
+            event.stopPropagation(); // Impede que o clique se propague para o 'window' imediatamente
+            const isExpanded = hamburgerIcon.getAttribute('aria-expanded') === 'true' || false;
+            hamburgerIcon.setAttribute('aria-expanded', !isExpanded);
+            dropdownMenu.classList.toggle('show');
+        });
+
+        // Opcional: Fechar o dropdown se o usuário clicar fora dele
+        window.addEventListener('click', function(event) {
+            // Verifica se o dropdown está visível E se o clique não foi no ícone nem dentro do menu
+            if (dropdownMenu.classList.contains('show') && 
+                !hamburgerIcon.contains(event.target) && 
+                !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove('show');
+                hamburgerIcon.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+});
