@@ -1,7 +1,12 @@
 {{!-- home.handlebars --}}
 {{#section "headerLinks"}}
+    {{#if user}}
+    <li><a href="/{{user.username}}/cadastro-pratos"><i class="fas fa-store"></i>Adicionar pratos</a></li>
+    <li><a href="/restaurantes"><i class="fas fa-search-location"></i> Restaurantes</a></li>
+    {{else}}
     <li><a href="/cadastro"><i class="fas fa-store"></i> Sou proprietário</a></li>
     <li><a href="/restaurantes"><i class="fas fa-search-location"></i> Restaurantes</a></li>
+    {{/if}}
 {{/section}}
 
 <div class="home-page-container-v3">
@@ -11,7 +16,11 @@
             <h1>Bem-vindo ao <span>card</span>Fácil!</h1>
             <p class="subtitle-v3">A maneira mais simples e elegante de apresentar seu cardápio ou descobrir novos sabores.</p>
             <div class="hero-cta-v3">
+                {{#if user}}
+                <a href="/{{user.username}}/cadastro-" class="btn-v3 btn-primary-v3">Quero criar meu cardápio! <i class="fas fa-angle-right"></i></a>
+                {{else}}
                 <a href="/cadastro" class="btn-v3 btn-primary-v3">Quero criar meu cardápio! <i class="fas fa-angle-right"></i></a>
+                {{/if}}
                 <a href="/restaurantes" class="btn-v3 btn-outline-v3">Ver restaurantes <i class="fas fa-search"></i></a>
             </div>
         </div>
@@ -348,9 +357,3 @@
     }
 
 </style>
-
-{{#section 'script'}}
-    <script>
-        console.log('Página Home v3 (mais parecida com a anterior, "Why" melhorado) carregada!');
-    </script>
-{{/section}}
