@@ -104,22 +104,7 @@ app.get('/logout', (req, res) => {
         res.redirect('/'); 
     });
 });
-app.get('/admin/deluser', (req, res) => {
-    const stmt = db.prepare('SELECT * FROM users');
-    let user = stmt.all()
-    res.render('admin/deluser', { user })
-})
-app.post('/api/admin/deluser', (req, res) => {
-    console.log(req.body)
-    try{
-        let stmt = db.prepare('DELETE FROM users WHERE id = ?')
-        stmt.run(req.body.userId)
-        console.log('Usuario deletado')
-    }catch(err){
-        console.log(`Houve um erro ao tentar deletar o usuario do banco de dados`)
-    }
-    res.status(201).json({teste: 'sim'})
-})
+
 app.get('/:username/cadastro-pratos', isAuthenticated, (req, res) => {
     // if (req.session.user && req.session.user.username !== req.params.username) {
     //     return res.status(403).send('Acesso negado.')
