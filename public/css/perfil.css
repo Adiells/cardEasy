@@ -1,0 +1,12 @@
+body.admin-body {
+    background-color: var(--dark, #1a1a1a); /* Fallback se --dark não estiver disponível */
+    color: var(--light, #f5f5f5);       /* Fallback se --light não estiver disponível */
+    font-family: 'Poppins', sans-serif; /* Fonte que você usou na sua view de perfil */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* .admin-page-wrapper {
+
+} */

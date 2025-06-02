@@ -132,6 +132,7 @@ app.post('/api/cadastro-pratos', (req, res) => {
         handlers.api.cadastrarPratos(req, res, fields, files)
     })
 })
+app.get('/perfil', handlers.perfil)
 app.get('/restaurantes', handlers.restaurantes)
 
 app.get('/restaurantes/:name', handlers.cardapio)

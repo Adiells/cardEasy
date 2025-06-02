@@ -1,0 +1,442 @@
+<section class="profile-container">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <img src="https://placehold.co/200x200/2e2e2e/f5f5f5?text=Foto" alt="Nome do Restaurante" id="profile-picture">
+            <button class="change-photo-btn">
+                <i class="fas fa-camera"></i> Alterar
+            </button>
+            <input type="file" id="photo-input" name="foto" accept="image/*" style="display: none;">
+        </div>
+        <div class="profile-info">
+            <h1 id="restaurant-name">Restaurante Fantástico</h1>
+            <p class="username" id="restaurant-username">@username_legal</p>
+            <p class="description" id="restaurant-description">Aqui vai uma descrição inspiradora sobre o restaurante, seus pratos incríveis e a experiência única que ele oferece aos seus clientes. Cozinha autoral com ingredientes frescos!</p>
+            
+            <div class="profile-info-actions">
+                <a href="/admin/perfil/editar" class="btn-profile-inline edit-action">
+                    <i class="fas fa-edit"></i> Editar Perfil
+                </a>
+                <a href="/admin/cadastro-pratos" class="btn-profile-inline add-action">
+                    <i class="fas fa-plus-circle"></i> Adicionar Prato
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Stats container --}}
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+            <div class="stat-info">
+                <h3>Vendas Totais</h3><p class="stat-value">1.234</p><p class="stat-label">últimos 30 dias</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-utensils"></i></div>
+            <div class="stat-info">
+                <h3>Pratos</h3><p class="stat-value">58</p><p class="stat-label">cadastrados</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-star"></i></div>
+            <div class="stat-info">
+                <h3>Avaliação</h3><p class="stat-value">4.8</p><p class="stat-label">de 5 estrelas</p>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Actions container --}}
+    <div class="actions-container">
+        <a href="#" class="action-btn"> 
+            <i class="fas fa-plus-circle"></i> Adicionar Novo Prato
+        </a>
+        <a href="#" class="action-btn">
+            <i class="fas fa-list-alt"></i> Gerenciar Cardápio
+        </a>
+        <a href="#" class="action-btn">
+            <i class="fas fa-file-invoice-dollar"></i> Ver Relatórios
+        </a>
+    </div>
+</section>
+
+<style>
+    /* Variáveis de cor */
+    :root {
+        --primary: #FF7A33;
+        --primary-dark: #e65c1a;
+        --dark: #1a1a1a;
+        --dark-light: #2e2e2e;
+        --light: #f5f5f5;
+        --gray: #888;
+    }
+
+    .profile-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 2rem;
+    }
+
+    /* Cabeçalho do Perfil */
+    .profile-header {
+        display: flex;
+        gap: 3rem;
+        align-items: center;
+        margin-bottom: 3rem;
+        background: rgba(47, 47, 47, 0.7); /* Fundo translúcido escuro */
+        padding: 2rem;
+        border-radius: 15px;
+        border: 1px solid #333;
+    }
+
+    .profile-avatar {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        min-width: 200px; /* Garante que não encolha demais */
+        border-radius: 15px; /* Bordas levemente arredondadas para avatar quadrado */
+        overflow: hidden;
+        border: 3px solid var(--primary);
+    }
+
+    .profile-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .change-photo-btn {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        opacity: 0; /* Escondido por padrão */
+    }
+    .profile-avatar:hover .change-photo-btn {
+        opacity: 1; /* Visível no hover */
+    }
+
+    .profile-info {
+        flex: 1;
+    }
+
+    .profile-info h1 {
+        font-size: 2.5rem;
+        margin: 0 0 5px 0;
+        color: var(--primary);
+    }
+
+    .profile-info .username {
+        font-size: 1.2rem;
+        color: var(--gray);
+        margin: 0 0 20px 0;
+    }
+
+    .profile-info .description {
+        color: var(--light);
+        margin: 0 0 25px 0;
+        max-width: 600px;
+        padding-bottom: 5px;
+        min-height: 50px; 
+    }
+
+    .profile-info-actions {
+        margin-top: 20px;
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: flex-end; /* Alinha à direita no desktop */
+    }
+
+    .btn-profile-inline {
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.25s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border: 2px solid var(--primary);
+        cursor: pointer;
+        color: var(--primary);
+    }
+    .btn-profile-inline .fas {
+        font-size: 0.9em;
+    }
+
+    .btn-profile-inline.edit-action {
+        background-color: var(--primary);
+        color: var(--dark);
+    }
+    .btn-profile-inline.edit-action:hover {
+        background-color: var(--primary-dark);
+        border-color: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(255, 122, 51, 0.3);
+    }
+
+    .btn-profile-inline.add-action {
+        background-color: transparent;
+    }
+    .btn-profile-inline.add-action:hover {
+        background-color: rgba(255, 122, 51, 0.15);
+        color: var(--primary-dark); 
+        border-color: var(--primary-dark);
+    }
+
+    /* Estatísticas */
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+    .stat-card {
+        background: var(--dark-light);
+        padding: 2rem;
+        border-radius: 10px;
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+        transition: transform 0.3s;
+        border: 1px solid #333;
+    }
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    .stat-icon {
+        font-size: 2.5rem;
+        color: var(--primary);
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 122, 51, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .stat-info h3 { /* Título do stat: "Vendas Totais" */
+        margin: 0 0 5px 0;
+        font-size: 1.2rem;
+        color: var(--light);
+    }
+    .stat-value { /* O número grande */
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0;
+        color: var(--primary);
+    }
+    .stat-label { /* O subtexto: "últimos 30 dias" */
+        color: var(--gray);
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    /* Ações Gerais */
+    .actions-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+    .action-btn {
+        background: rgba(255, 122, 51, 0.1);
+        color: var(--primary);
+        padding: 1.5rem;
+        border-radius: 10px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-weight: 600;
+        transition: all 0.3s;
+        border: 1px solid var(--primary);
+        text-align: center;
+    }
+    .action-btn:hover {
+        background: rgba(255, 122, 51, 0.3);
+        transform: translateY(-3px);
+    }
+
+
+    @media (max-width: 992px) { /* Ajustes gerais para tablets e telas menores */
+        .profile-header {
+            flex-direction: column;
+            text-align: center;
+            align-items: center; 
+            gap: 1.5rem; /* Reduz gap no modo coluna */
+        }
+        .profile-avatar {
+            margin: 0 auto 1rem auto; /* Reduz margem inferior */
+        }
+        .profile-info {
+            text-align: center;
+            width: 100%;
+        }
+        .profile-info .description { 
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 90%; /* Permite que a descrição seja um pouco mais larga */
+        }
+        .profile-info-actions { /* Centralizar os botões no mobile */
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .profile-container {
+            padding: 1rem; /* Menos padding no container geral */
+            margin: 1rem auto;
+        }
+        .profile-header {
+            padding: 1.5rem; /* Menos padding no cabeçalho */
+            margin-bottom: 1.5rem; /* Menos margem inferior */
+        }
+        .profile-avatar {
+            width: 100px; /* Avatar menor, estilo Instagram */
+            height: 100px;
+            min-width: 100px;
+            border-radius: 50%; /* Avatar circular */
+        }
+        .change-photo-btn { /* Botão de alterar foto sempre visível e menor em mobile */
+            opacity: 1;
+            font-size: 0.7rem;
+            padding: 5px;
+            gap: 4px;
+            background: rgba(0,0,0,0.5);
+        }
+        .change-photo-btn .fas {
+            font-size: 0.8em;
+        }
+
+        .profile-info h1 { /* Nome do restaurante */
+            font-size: 1.8rem; /* Menor */
+            margin-bottom: 2px;
+        }
+        .profile-info .username {
+            font-size: 1rem; /* Menor */
+            margin-bottom: 10px;
+        }
+        .profile-info .description {
+            font-size: 0.85rem; /* Menor */
+            margin-bottom: 20px; /* Mais espaço antes dos botões */
+            min-height: auto; /* Remove min-height */
+        }
+
+        /* Botões Editar Perfil / Adicionar Prato no mobile */
+        .profile-info-actions {
+            flex-direction: column; /* Botões empilhados */
+            gap: 10px; /* Espaço entre botões empilhados */
+            align-items: center; /* Centraliza os botões empilhados */
+        }
+        .btn-profile-inline {
+            width: 80%; /* Botões ocupam mais largura */
+            max-width: 300px; /* Mas não excessivamente largos */
+            font-size: 0.85rem; /* Texto do botão menor */
+            padding: 12px 15px; /* Padding ajustado */
+        }
+
+        /* Stats Container - Layout Horizontal estilo Instagram */
+        .stats-container {
+            display: flex; /* Muda para flex para layout horizontal */
+            justify-content: space-around;
+            gap: 0.5rem; /* Pequeno espaço entre os stats */
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-top: 1px solid var(--dark-light);
+            border-bottom: 1px solid var(--dark-light);
+            grid-template-columns: none; /* Remove grid layout */
+        }
+        .stat-card {
+            background: transparent; /* Remove fundo do card individual */
+            border: none; /* Remove borda do card individual */
+            box-shadow: none; /* Remove sombra do card individual */
+            padding: 0.5rem; /* Padding mínimo */
+            flex-direction: column; /* Valor e label empilhados */
+            align-items: center; /* Centraliza texto */
+            gap: 0.25rem; /* Pequeno espaço entre valor e label */
+            flex: 1; /* Ocupa espaço igualitariamente */
+            text-align: center;
+        }
+        .stat-card:hover {
+            transform: none; /* Remove hover effect no mobile */
+        }
+        .stat-icon {
+            display: none; /* Esconde ícone no mobile para layout mais limpo */
+        }
+        .stat-info h3 { /* Label do stat, ex: "Vendas" */
+            font-size: 0.8rem; /* Menor */
+            color: var(--gray); /* Mais suave */
+            margin-bottom: 2px;
+            text-transform: uppercase; /* Para ficar parecido com "POSTS" */
+            font-weight: normal;
+        }
+        .stat-value { /* Valor numérico */
+            font-size: 1.1rem; /* Menor e menos destacado */
+            color: var(--light); /* Cor mais clara, menos chamativa que o primary */
+            font-weight: 600;
+        }
+        .stat-label { /* Subtexto do stat, ex: "últimos 30 dias" */
+            display: none; /* Esconde para simplificar, o h3 já faz o papel de label */
+        }
+
+        /* Actions Container - Botões de ação principais empilhados */
+        .actions-container {
+            grid-template-columns: 1fr; /* Botões empilhados, ocupando largura total */
+            gap: 1rem; /* Espaço entre botões */
+        }
+        .action-btn {
+            font-size: 0.9rem; /* Texto do botão menor */
+            padding: 1rem; /* Padding ajustado */
+            justify-content: center; /* Centraliza conteúdo do botão */
+            background: var(--dark-light); /* Fundo mais sutil */
+            border-color: #444;
+        }
+        .action-btn:hover {
+             background: #3a3a3a; /* Leve escurecimento no hover */
+             transform: none;
+        }
+    }
+
+    @media (max-width: 576px) { /* Ajustes finos para telas bem pequenas */
+        .profile-container {
+            padding: 0.5rem;
+        }
+        .profile-header {
+            padding: 1rem;
+        }
+        .profile-info h1 {
+            font-size: 1.6rem;
+        }
+        .profile-info .username {
+            font-size: 0.9rem;
+        }
+        .profile-info .description {
+            font-size: 0.8rem;
+        }
+        .btn-profile-inline {
+            width: 90%; /* Botões ocupam ainda mais largura */
+        }
+         .stat-info h3 {
+            font-size: 0.7rem;
+        }
+        .stat-value {
+            font-size: 1rem;
+        }
+    }
+
+</style>
