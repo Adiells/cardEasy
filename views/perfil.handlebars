@@ -13,10 +13,10 @@
             <p class="description" id="restaurant-description">Aqui vai uma descrição inspiradora sobre o restaurante, seus pratos incríveis e a experiência única que ele oferece aos seus clientes. Cozinha autoral com ingredientes frescos!</p>
             
             <div class="profile-info-actions">
-                <a href="/admin/perfil/editar" class="btn-profile-inline edit-action">
+                <a href="perfil/editar" class="btn-profile-inline edit-action">
                     <i class="fas fa-edit"></i> Editar Perfil
                 </a>
-                <a href="/admin/cadastro-pratos" class="btn-profile-inline add-action">
+                <a href="/{{user.username}}/cadastro-pratos" class="btn-profile-inline add-action">
                     <i class="fas fa-plus-circle"></i> Adicionar Prato
                 </a>
             </div>
@@ -440,3 +440,8 @@
     }
 
 </style>
+{{#section 'script'}}
+    <script>
+        document.body.classList.add('profile-page');
+    </script>
+{{/section}}

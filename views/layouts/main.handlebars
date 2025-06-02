@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/toast.css">
+    <link rel="stylesheet" href="/css/perfil.css">
     {{{_sections.head}}}
 </head>
 <body>
@@ -23,8 +24,13 @@
                     {{#if _sections.headerLinks}}
                         {{{_sections.headerLinks}}}
                     {{else}}
-                        <li><a href="/cadastro">Sou propietario</a></li>
-                        <li><a href="/restaurantes">Restaurantes</a></li>
+                        {{#if user}}
+                            <li><a href="/{{user.username}}/cadastro-pratos"><i class="fas fa-store"></i>Cadastrar pratos</a></li>
+                            <li><a href="/restaurantes"><i class="fas fa-search-location"></i>Restaurantes</a></li>
+                        {{else}}
+                            <li><a href="/cadastro"><i class="fas fa-store"></i>Cadastrar restaurante</a></li>
+                            <li><a href="/restaurantes"><i class="fas fa-search-location"></i>Restaurantes</a></li>
+                        {{/if}}
                     {{/if}}
 
                 </ul>
@@ -35,7 +41,7 @@
                 </button>
                 <div id="dropdown-menu" class="dropdown-content">
                     {{#if user}} 
-                        <a href="/#">Meu Perfil ({{user.username}})</a> 
+                        <a href="/perfil">Meu Perfil ({{user.username}})</a> 
                         <a href="/logout">Logout</a>
                     {{else}}
                         <a href="/login">Login</a>

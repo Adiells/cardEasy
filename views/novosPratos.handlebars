@@ -1,9 +1,5 @@
-{{#section "headerLinks"}}
-    <li><a href="/#">Dashboard</a></li>
-    <li><a href="/#">Sobre</a></li>
-    <li><a href="/#">Cardapio</a></li>
-{{/section}}
-{{#ifEq rota user}}
+{{#ifEq rota user.username}}
+
 <div class="form-container" id="formContainer">
     <h1><i class="fas fa-plus-circle"></i> Cadastrar Novo Prato</h1>
     
@@ -72,8 +68,8 @@
         </div>
         <h2>Acesso Restrito</h2>
         
-        {{#if user}}
-            <p>Você está logado como <strong>{{user}}</strong>.</p>
+        {{#if user}}{{!--eu sei que nao faz sentido esse bloco, mas pra que tantos codigos se a vida nao é programada e as melhore coisas nao tem logica--}}
+            <p>Você está logado como <strong>{{user.username}}</strong>.</p>
             <p>Se esta é a sua conta e você acredita que deveria ter acesso, verifique se o endereço (URL) está correto. Você pode tentar adicionar seus pratos por <a href="/{{user}}/cadastro-pratos" class="notice-link">este link direto</a>.</p>
         {{else}}
             <p>Parece que você não está logado ou não tem permissão para visualizar esta página diretamente.</p>
