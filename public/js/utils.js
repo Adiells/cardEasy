@@ -68,7 +68,6 @@ function validatePassword() {
     }
 }
 async function validateUsername() {
-    button.disabled = true
     let currentValue = fieldUsername.value;
     if (currentValue.includes(' ')) {
         currentValue = currentValue.replace(/\s/g, '');

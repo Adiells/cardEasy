@@ -170,6 +170,7 @@
     }
 </style>
 {{#section 'script'}}
+<script src="/js/utils.js"></script>
 <script>
     const formId = document.getElementById('loginForm')
     processFormRequest(formId, '/api/login', 'Login realizado', ['username', 'password'])
