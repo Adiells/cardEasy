@@ -6,6 +6,7 @@ const BetterSqlite3Store = require('better-sqlite3-session-store')(session)
 const multiparty = require('multiparty')
 const path = require('path')
 const db = require('./database/database')
+const compression = require('compression')
 
 const handlers = require('./lib/handlers')
 const cadastro = require('./lib/cadastro')
@@ -35,7 +36,7 @@ const limpar = str => str.trimStart().length === 0 ? "" : str.trimStart();
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
-
+app.use(compression())
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(__dirname + '/public'))
 app.use(express.json());
@@ -72,8 +73,8 @@ app.get('/', handlers.home)
 app.get('/cadastro', handlers.cadastro)
 app.post('/api/cadastro', (req, res) => {
     const password = req.body.password
-    const name = req.body.name
-    const username = req.body.username
+    const name = limpar(req.body.name)
+    const username = limpar(req.body.username)
     
 
     if(!cadastro.isPasswordValid(password)) return res.status(500).json({err: 'sua senha não é usa senha válida'})
@@ -133,8 +134,9 @@ app.post('/api/cadastro-pratos', (req, res) => {
     })
 })
 app.get('/perfil', isAuthenticated, handlers.perfil)
+app.get('/perfil/editar', isAuthenticated, handlers.perfilEditar)
+app.post('/api/perfil/editar', handlers.api.perfilEditar)
 app.get('/restaurantes', handlers.restaurantes)
-
 app.get('/restaurantes/:name', handlers.cardapio)
 
 app.use((req, res) => {
