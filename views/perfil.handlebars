@@ -1,16 +1,16 @@
 <section class="profile-container">
     <div class="profile-header">
         <div class="profile-avatar">
-            <img src="https://placehold.co/200x200/2e2e2e/f5f5f5?text=Foto" alt="Nome do Restaurante" id="profile-picture">
+            <img src="/uploads/Restaurante9/{{data.image_url}}" alt="Nome do Restaurante" id="profile-picture">
             <button class="change-photo-btn">
                 <i class="fas fa-camera"></i> Alterar
             </button>
             <input type="file" id="photo-input" name="foto" accept="image/*" style="display: none;">
         </div>
         <div class="profile-info">
-            <h1 id="restaurant-name">Restaurante Fantástico</h1>
-            <p class="username" id="restaurant-username">@username_legal</p>
-            <p class="description" id="restaurant-description">Aqui vai uma descrição inspiradora sobre o restaurante, seus pratos incríveis e a experiência única que ele oferece aos seus clientes. Cozinha autoral com ingredientes frescos!</p>
+            <h1 id="restaurant-name">{{data.nome}}</h1>
+            <p class="username" id="restaurant-username">@{{data.username}}</p>
+            <p class="description" id="restaurant-description">{{data.description}}</p>
             
             <div class="profile-info-actions">
                 <a href="perfil/editar" class="btn-profile-inline edit-action">
@@ -28,19 +28,19 @@
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
             <div class="stat-info">
-                <h3>Vendas Totais</h3><p class="stat-value">1.234</p><p class="stat-label">últimos 30 dias</p>
+                <h3>Vendas Totais</h3><p class="stat-value">(Há implementar...)</p><p class="stat-label">últimos 30 dias</p>
             </div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-utensils"></i></div>
             <div class="stat-info">
-                <h3>Pratos</h3><p class="stat-value">58</p><p class="stat-label">cadastrados</p>
+                <h3>Pratos</h3><p class="stat-value">{{count.total}}</p><p class="stat-label">cadastrados</p>
             </div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-star"></i></div>
             <div class="stat-info">
-                <h3>Avaliação</h3><p class="stat-value">4.8</p><p class="stat-label">de 5 estrelas</p>
+                <h3>Avaliação</h3><p class="stat-value">(Há implementar...)</p><p class="stat-label">de 5 estrelas</p>
             </div>
         </div>
     </div>
