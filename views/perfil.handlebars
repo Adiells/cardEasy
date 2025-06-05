@@ -1,7 +1,7 @@
 <section class="profile-container">
     <div class="profile-header">
         <div class="profile-avatar">
-            <img src="/uploads/Restaurante9/{{data.image_url}}" alt="Nome do Restaurante" id="profile-picture">
+            <img src="/uploads/profilePhoto/{{data.image_url}}" alt="Nome do Restaurante" id="profile-picture">
             <button class="change-photo-btn">
                 <i class="fas fa-camera"></i> Alterar
             </button>
@@ -22,6 +22,28 @@
             </div>
         </div>
     </div>
+    <div id="photo-modal" class="photo-modal" style="display: none;">
+    <div class="photo-modal-content">
+        <span class="photo-modal-close-btn">&times;</span>
+        <h2>Alterar Foto do Perfil</h2>
+        <form id="photo-upload-form" enctype="multipart/form-data">
+            <div class="photo-modal-preview-container">
+                <img id="modal-preview-image" src="#" alt="Pré-visualização da nova foto" style="display: none;">
+                <p id="modal-no-preview-text">Nenhuma imagem selecionada</p>
+            </div>
+            <div class="photo-modal-actions">
+                <input type="file" id="foto" name="foto" accept="image/*" style="display: none;">
+                <button type="button" id="modal-choose-photo-btn" class="btn-profile-inline edit-action">
+                    Escolher Arquivo
+                </button>
+                <button type="submit" id="modal-save-photo-btn" class="btn-profile-inline add-action" disabled>
+                    Salvar Alterações
+                </button>
+                <button type="button" id="modal-cancel-btn" class="btn-profile-inline">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
 
     {{!-- Stats container --}}
     <div class="stats-container">
@@ -271,8 +293,104 @@
         background: rgba(255, 122, 51, 0.3);
         transform: translateY(-3px);
     }
+    .photo-modal {
+        position: fixed; /* Fica sobre todo o conteúdo */
+        z-index: 1000; /* Garante que esteja na frente */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto; /* Permite scroll se o conteúdo for maior */
+        background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro semi-transparente */
+        display: flex; /* Para centralizar o conteúdo */
+        align-items: center;
+        justify-content: center;
+    }
 
+    .photo-modal-content {
+        background-color: var(--dark-light); /* Usando sua variável de cor */
+        margin: auto;
+        padding: 25px;
+        border: 1px solid #555;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 500px; /* Largura máxima do modal */
+        color: var(--light);
+        position: relative;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
 
+    .photo-modal-close-btn {
+        color: var(--gray);
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .photo-modal-close-btn:hover,
+    .photo-modal-close-btn:focus {
+        color: var(--primary);
+        text-decoration: none;
+    }
+
+    .photo-modal h2 {
+        text-align: center;
+        color: var(--primary);
+        margin-bottom: 20px;
+    }
+
+    .photo-modal-preview-container {
+        width: 100%;
+        height: 250px; /* Altura fixa para o preview */
+        background-color: var(--dark); /* Fundo um pouco mais escuro para o container */
+        border: 2px dashed var(--gray);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        overflow: hidden; /* Para conter a imagem */
+    }
+
+    #modal-preview-image {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain; /* Garante que a imagem caiba sem distorcer */
+        border-radius: 6px;
+    }
+
+    #modal-no-preview-text {
+        color: var(--gray);
+        font-style: italic;
+    }
+
+    .photo-modal-actions {
+        display: flex;
+        justify-content: space-around; /* Ou flex-end, center, etc. */
+        gap: 10px;
+        flex-wrap: wrap; /* Para botões quebrarem em telas menores */
+    }
+
+    /* Ajustar botões do modal para ter um tamanho similar se necessário */
+    .photo-modal-actions .btn-profile-inline {
+        flex-grow: 1; /* Faz os botões tentarem ocupar espaço igual */
+        min-width: 120px; /* Largura mínima para cada botão */
+        text-align: center;
+    }
+
+    #modal-save-photo-btn:disabled {
+        background-color: var(--gray) !important;
+        border-color: var(--gray) !important;
+        color: var(--dark-light) !important;
+        cursor: not-allowed;
+    }
+    #modal-save-photo-btn:disabled:hover {
+        transform: none;
+        box-shadow: none;
+    }
     @media (max-width: 992px) { /* Ajustes gerais para tablets e telas menores */
         .profile-header {
             flex-direction: column;
@@ -410,6 +528,22 @@
              background: #3a3a3a; /* Leve escurecimento no hover */
              transform: none;
         }
+        .photo-modal-content {
+            padding: 20px;
+        }
+        .photo-modal-preview-container {
+            height: 200px;
+        }
+        .photo-modal-actions {
+            flex-direction: column; /* Empilhar botões */
+        }
+        .photo-modal-actions .btn-profile-inline {
+            width: 100%; /* Botões ocupam toda a largura */
+            margin-bottom: 10px;
+        }
+        .photo-modal-actions .btn-profile-inline:last-child {
+            margin-bottom: 0;
+        }
     }
 
     @media (max-width: 576px) { /* Ajustes finos para telas bem pequenas */
@@ -444,4 +578,7 @@
     <script>
         document.body.classList.add('profile-page');
     </script>
+    <script src="/js/showToast.js"></script>
+    <script src="/js/processFormRequest.js"></script>
+    <script src="/js/loadImage.js"></script>
 {{/section}}

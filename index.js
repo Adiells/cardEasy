@@ -80,7 +80,7 @@ app.post('/api/cadastro', (req, res) => {
     if(!cadastro.isPasswordValid(password)) return res.status(500).json({err: 'sua senha não é usa senha válida'})
     if(!cadastro.isUsernameValid(username)) return res.status(500).json({err: 'seu username não é um username valido'})
     console.log(req.body)
-    if(limpar(name).length == 0 || name.length > 15) return res.status(500).json({err: 'seu nome é muito grande'})
+    if(limpar(name).length == 0 || name.length > 40) return res.status(500).json({err: 'seu nome é muito grande'})
     handlers.api.cadastro(req, res)
 })
 app.get('/api/usuarios/verificar', handlers.api.usersVerify)
@@ -116,7 +116,7 @@ app.get('/:username/cadastro-pratos', isAuthenticated, (req, res) => {
 app.post('/api/cadastro-pratos', (req, res) => {
     const form = new multiparty.Form()
     form.parse(req, (err, fields, files) => {
-        if(err) return res.status(500).send({error: err.message})
+        if(err) return res.status(500).json({err: err.message})
         let erros = []
         
         let preco = parseFloat(fields.preco && fields.preco[0])
@@ -136,6 +136,13 @@ app.post('/api/cadastro-pratos', (req, res) => {
 app.get('/perfil', isAuthenticated, handlers.perfil)
 app.get('/perfil/editar', isAuthenticated, handlers.perfilEditar)
 app.post('/api/perfil/editar', handlers.api.perfilEditar)
+app.post('/api/perfil/foto', (req, res) => {
+    const form = new multiparty.Form()
+    form.parse(req, (err, fields, files) => {
+        if(err) return res.status(500).json({err: err.message})
+        handlers.api.perfilFoto(req, res, fields, files)
+    })
+})
 app.get('/restaurantes', handlers.restaurantes)
 app.get('/restaurantes/:name', handlers.cardapio)
 
