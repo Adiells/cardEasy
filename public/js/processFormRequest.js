@@ -1,6 +1,5 @@
 function processFormRequest(formId, apiRouter, successMessage, fieldNamesArray, multiparty=false){
     formId.addEventListener('submit', evt => {
-        console.log('khkflgiodahdgoivhndaioksnfohksdahnfoiheqsn')
         evt.preventDefault()
         let body
         let headers = {}
@@ -18,10 +17,8 @@ function processFormRequest(formId, apiRouter, successMessage, fieldNamesArray, 
             }
             body = JSON.stringify(dataObject)
             headers['Content-Type'] = 'application/json'
-            console.log(body)
         }else{
             body = new FormData(evt.target)
-            console.log(body)
         }
         fetch(apiRouter, {method: 'POST', body, headers: headers})
             .then(resp => {

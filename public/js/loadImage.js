@@ -69,7 +69,6 @@ hiddenPhotoInput.addEventListener('change', function(event) {
 
 // Salvar a foto
 modalSavePhotoButton.addEventListener('click', () => {
-    console.log('cliclou')
     if (selectedFile && modalPreviewImage.src !== '#') {
         // Atualiza a imagem de perfil principal permanentemente (visualmente)
         mainProfilePicture.src = modalPreviewImage.src;

@@ -6,7 +6,7 @@
 <section class="restaurante-info" style="background: rgba(47, 47, 47, 0.7); backdrop-filter: blur(5px);">
     <div class="restaurante-header">
         <div class="restaurante-foto">
-            <img src="/uploads/Restaurante1/bife_acebolado_1747690888618.png" alt="teste">{{!foto teste, lembrar de alterar e deixar dinamico}}
+            <img src="/uploads/profilePhoto/{{result.0.image_url}}" alt="teste">{{!foto teste, lembrar de alterar e deixar dinamico}}
         </div>
         <div class="restaurante-detalhes">
             <h1>{{result.0.nome}}</h1>{{!lembrar de colocar conteudo dinamico aqui}}
@@ -18,7 +18,7 @@
             </div> --}}
         </div>
     </div>
-    <p class="restaurante-descricao">{{!restaurante.descricao}}descricao</p>
+    <p class="restaurante-descricao">{{result.0.description}}</p>
 </section>
 
 <div class="menu-grid">

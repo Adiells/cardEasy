@@ -70,7 +70,7 @@
         
         {{#if user}}{{!--eu sei que nao faz sentido esse bloco, mas pra que tantos codigos se a vida nao é programada e as melhore coisas nao tem logica--}}
             <p>Você está logado como <strong>{{user.username}}</strong>.</p>
-            <p>Se esta é a sua conta e você acredita que deveria ter acesso, verifique se o endereço (URL) está correto. Você pode tentar adicionar seus pratos por <a href="/{{user}}/cadastro-pratos" class="notice-link">este link direto</a>.</p>
+            <p>Se esta é a sua conta e você acredita que deveria ter acesso, verifique se o endereço (URL) está correto. Você pode tentar adicionar seus pratos por <a href="/{{user.username}}/cadastro-pratos" class="notice-link">este link direto</a>.</p>
         {{else}}
             <p>Parece que você não está logado ou não tem permissão para visualizar esta página diretamente.</p>
             <p>Por favor, faça o login para continuar.</p>
