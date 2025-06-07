@@ -1,282 +1,214 @@
-{{#section "headerLinks"}}
-    <li><a href="/#">Sou propietario</a></li>
-    <li><a href="/#">Sobre</a></li>
-    <li><a href="/restaurante/cadastro-pratos">Adicionar pedidos</a></li>
-{{/section}}
-<section class="restaurante-info" style="background: rgba(47, 47, 47, 0.7); backdrop-filter: blur(5px);">
-    <div class="restaurante-header">
-        <div class="restaurante-foto">
-            <img src="/uploads/profilePhoto/{{result.0.image_url}}" alt="teste">{{!foto teste, lembrar de alterar e deixar dinamico}}
-        </div>
-        <div class="restaurante-detalhes">
-            <h1>{{result.0.nome}}</h1>{{!lembrar de colocar conteudo dinamico aqui}}
-            <p class="restaurante-username">@{{result.0.username}}</p>
-            {{!-- <div class="restaurante-meta">
-                <span><i class="fas fa-star"></i> 4.8 (256 avaliações)</span>
-                <span><i class="fas fa-clock"></i> Aberto agora</span>
-                <span><i class="fas fa-tag"></i> {{!restaurante.categoria}}categoria</span>
-            </div> --}}
-        </div>
-    </div>
-    <p class="restaurante-descricao">{{result.0.description}}</p>
-</section>
+<div class="cardapio-container">
 
-<div class="menu-grid">
-    {{#each result}}
-    <div class="menu-item">
-        <div class="item-image">
-            <img src="/uploads/Restaurante{{restaurante_id}}/{{imagem}}" alt="{{titulo}}">
+    <section class="info-restaurante">
+        <img src="/uploads/profilePhoto/{{restaurante.image_url}}" alt="Logo do Restaurante">
+        <div class="text-info">
+            <h1>{{restaurante.nome}}</h1>
+            <p>{{restaurante.description}}</p>
         </div>
-        <div class="item-content">
-            <div class="item-header">
-                <h3 class="item-title">{{titulo}}</h3>
-                <span class="item-price">R$ {{preco}}</span>
+    </section>
+
+    <section class="categorias">
+        <button class="categoria-btn active" data-categoria="todos">Todos</button>
+        {{#each categorias}}
+            <button class="categoria-btn" data-categoria="{{this.categoria}}">{{this.categoria}}</button>
+        {{/each}}
+    </section>
+
+    <section class="produtos-grid">
+        {{#each produtos}}
+        <div class="produto-card" data-categoria="{{this.categoria}}" data-titulo="{{this.titulo}}" data-preco="{{this.preco}}" data-descricao="{{this.descricao}}" data-imagem="/uploads/Restaurante{{this.imagem}}">
+            <img src="/uploads/Restaurante{{this.imagem}}" alt="{{this.titulo}}">
+            <div class="produto-info">
+                <div class="produto-texto">
+                    <h3>{{this.titulo}}</h3>
+                    <span class="preco">R$ {{this.preco}}</span>
+                </div>
+                <div class="action">
+                    {{#if ../isOwner}}
+                    <button class="action-btn">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button class="action-btn" title="Apagar produto">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    {{/if}}
+                    <button class="action-btn" title="Adicionar ao carrinho">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
             </div>
-            <p class="item-description">{{descricao}}</p>
-            <div class="item-actions">
-                <button class="action-btn cart">
-                    <i class="fas fa-shopping-basket fa-sm"></i>
+        </div>
+        {{/each}}
+    </section>
+
+</div>
+
+<div id="modal-produto" class="modal-overlay">
+    <div class="modal-conteudo">
+        <button class="modal-fechar">&times;</button>
+        <img id="modal-img" src="" alt="Imagem do produto">
+        <div class="modal-info">
+            <h2 id="modal-titulo"></h2>
+            <p id="modal-descricao"></p>
+            <div class="modal-acao">
+                <span id="modal-preco" class="preco"></span>
+                <button class="add-carrinho-btn-modal">
+                    <i class="fas fa-shopping-cart"></i>
+                    Adicionar ao Carrinho
                 </button>
             </div>
         </div>
     </div>
-    {{/each}}
 </div>
+
 <style>
-    .menu-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 1.5rem;
-        padding: 1rem;
-        max-width: 1200px;
-        margin: 0 auto;
+    :root {
+        --cor-principal: #FF7A33;
+        --fundo: #1c1c1c;
+        --fundo-card: #2a2a2a;
+        --texto: #f0f0f0;
+        --texto-secundario: #a0a0a0;
+        --borda: #444;
     }
-
-    .menu-item {
-        background: rgba(30, 30, 30, 0.9);
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-        transition: all 0.25s ease;
-        border: 1px solid #333;
-    }
-
-    .menu-item:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(255, 122, 51, 0.15);
-    }
-
-    .item-image {
-        height: 160px;
-        overflow: hidden;
-    }
-
-    .item-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.4s;
-    }
-
-    .menu-item:hover .item-image img {
-        transform: scale(1.03);
-    }
-
-    .item-content {
-        padding: 1rem;
-    }
-
-    .item-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 0.5rem;
-    }
-
-    .item-title {
-        color: #FF7A33;
+    body {
         margin: 0;
-        font-size: 1.1rem;
-        font-weight: 600;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        background-color: var(--fundo);
+        color: var(--texto);
+    }
+    .cardapio-container {
+        max-width: 1100px;
+        margin: 2rem auto;
+        padding: 0 1rem;
     }
 
-    .item-price {
-        color: #FF7A33;
-        font-weight: 700;
-        font-size: 1rem;
+    /* 1. Info Restaurante */
+    .info-restaurante {
+        text-align: center;
+        margin-bottom: 2rem;
     }
-
-    .item-description {
-        color: #bbb;
-        font-size: 0.85rem;
-        margin: 0 0 1rem 0;
-        line-height: 1.4;
-        min-height: 40px;
-    }
-
-    .item-actions {
+    {{!-- .text-info{
         display: flex;
-        gap: 0.5rem;
-        justify-content: flex-end;
-    }
+        flex-direction: row;
+    } --}}
+    .info-restaurante img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--cor-principal); }
+    .info-restaurante h1 { margin: 0.5rem 0; color: var(--cor-principal); }
+    .info-restaurante p { color: var(--texto-secundario); max-width: 600px; margin: 0 auto; }
 
-    .action-btn {
-        background: transparent;
-        color: #FF7A33;
-        border: 1px solid #FF7A33;
-        width: 28px;
-        height: 28px;
+    /* 2. Categorias */
+    .categorias { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .categoria-btn { background-color: var(--fundo-card); color: var(--texto); border: 1px solid var(--borda); padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; transition: all 0.2s ease; }
+    .categoria-btn:hover, .categoria-btn.active { background-color: var(--cor-principal); color: var(--fundo); border-color: var(--cor-principal); }
+    .categoria-btn.active { font-weight: bold; }
+
+    /* 3. Grid de Produtos */
+    .produtos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; }
+    .produto-card { background-color: var(--fundo-card); border-radius: 8px; overflow: hidden; border: 1px solid var(--borda); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .produto-card:hover { transform: translateY(-5px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
+    .produto-card img { width: 100%; height: 160px; object-fit: cover; cursor: pointer; }
+    .produto-info { padding: 1rem; display: flex; align-items: center; justify-content: space-between; } /* NOVO: Flexbox para alinhar texto e botão */
+    .produto-info h3 { margin: 0; font-size: 1.1rem; }
+    .preco { color: var(--cor-principal); font-weight: bold; font-size: 1.1rem; }
+    .produto-card.hidden { display: none; }
+    
+    /* NOVO: Estilo para o botão de carrinho no card */
+    .action{
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+    .action-btn{
+        background-color: transparent;
+        border: 1px solid var(--cor-principal);
+        color: var(--cor-principal);
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
+        cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s;
+        transition: all 0.2s ease;
+        flex-shrink: 0; /* Impede que o botão encolha */
     }
-
     .action-btn:hover {
-        background: rgba(255, 122, 51, 0.2);
-        transform: scale(1.1);
+        background-color: var(--cor-principal);
+        color: var(--fundo);
     }
+    
+    /* 4. Modal */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: none; align-items: center; justify-content: center; z-index: 1000; }
+    .modal-conteudo { background: var(--fundo-card); padding: 2rem; border-radius: 8px; position: relative; width: 90%; max-width: 500px; }
+    .modal-fechar { position: absolute; top: 10px; right: 15px; background: none; border: none; color: var(--texto); font-size: 2rem; cursor: pointer; }
+    .modal-conteudo img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; margin-bottom: 1rem; }
+    #modal-titulo { margin: 0 0 0.5rem 0; color: var(--cor-principal); }
+    #modal-descricao { color: var(--texto-secundario); margin-bottom: 1.5rem; }
 
-    .action-btn i {
-        font-size: 0.8rem;
-    }
-    .restaurante-info {
-        padding: 2rem;
-        margin: 0 auto;
-        max-width: 1200px;
-        border-radius: 0 0 10px 10px;
-        border: 1px solid #333;
-        border-top: none;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .restaurante-header {
+    /* NOVO: Estilos para a área de ação do modal */
+    .modal-acao {
         display: flex;
-        gap: 2rem;
+        justify-content: space-between;
         align-items: center;
-        margin-bottom: 1.5rem;
+        gap: 1rem;
     }
-
-    .restaurante-foto {
-        width: 120px;
-        height: 120px;
-        border-radius: 10px;
-        overflow: hidden;
-        border: 2px solid #FF7A33;
-    }
-
-    .restaurante-foto img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .restaurante-detalhes h1 {
-        color: #FF7A33;
-        margin: 0 0 0.3rem 0;
-        font-size: 1.8rem;
-    }
-
-    .restaurante-username {
-        color: #aaa;
-        margin: 0 0 1rem 0;
-        font-size: 0.9rem;
-    }
-
-    .restaurante-meta {
+    .add-carrinho-btn-modal {
+        background-color: var(--cor-principal);
+        color: var(--fundo);
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
         display: flex;
-        gap: 1.5rem;
-        color: #ddd;
-        font-size: 0.9rem;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.2s ease;
+    }
+    .add-carrinho-btn-modal:hover {
+        opacity: 0.65;
     }
 
-    .restaurante-meta i {
-        color: #FF7A33;
-        margin-right: 0.3rem;
-    }
-
-    .restaurante-descricao {
-        color: #ccc;
-        line-height: 1.6;
-        padding-top: 1rem;
-        border-top: 1px solid #333;
-        margin: 1rem 0 0 0;
-    }
-
-    /* Responsividade */
-    @media (max-width: 768px) {
-        .menu-grid {
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-        
-        .item-image {
-            height: 140px;
-        }
-        .restaurante-header {
-        flex-direction: row; /* Mantém lado a lado */
-        gap: 1.5rem;
-        align-items: flex-start; /* Alinhamento superior */
-        }
-
-        .restaurante-foto {
-            width: 80px;
-            height: 80px;
-            min-width: 80px; /* Evita compressão */
-        }
-
-        .restaurante-detalhes {
-            flex: 1;
-            overflow: hidden; /* Previne vazamento */
-        }
-
-        .restaurante-detalhes h1 {
-            font-size: 1.4rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .restaurante-username {
-            font-size: 0.8rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .restaurante-meta {
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            row-gap: 0.5rem;
-            font-size: 0.8rem;
-        }
-
-        .restaurante-descricao {
-            font-size: 0.9rem;
-            margin-top: 1.2rem;
-        }
-    }
-
-    /* Ajuste extra para telas muito pequenas */
-    @media (max-width: 480px) {
-        .restaurante-header {
-            gap: 1rem;
-        }
-
-        .restaurante-foto {
-            width: 60px;
-            height: 60px;
-            min-width: 60px;
-            border-width: 1px;
-        }
-
-        .restaurante-meta span {
-            display: flex;
-            align-items: center;
-        }
-
-        .restaurante-meta i {
-            font-size: 0.7rem;
-        }
-    }
 </style>
+{{#section 'script'}}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const botoesCategoria = document.querySelectorAll('.categoria-btn');
+        const todosProdutos = document.querySelectorAll('.produto-card');
+        botoesCategoria.forEach(botao => {
+            botao.addEventListener('click', () => {
+                document.querySelector('.categoria-btn.active').classList.remove('active');
+                botao.classList.add('active');
+                const categoriaSelecionada = botao.dataset.categoria;
+                todosProdutos.forEach(produto => {
+                    const deveEsconder = categoriaSelecionada !== 'todos' && produto.dataset.categoria !== categoriaSelecionada;
+                    produto.classList.toggle('hidden', deveEsconder);
+                });
+            });
+        });
+
+        // --- LÓGICA DO MODAL DE PRODUTO ---
+        const modal = document.getElementById('modal-produto');
+        const modalFechar = document.querySelector('.modal-fechar');
+        
+        todosProdutos.forEach(produto => {
+            // Adiciona o listener ao card 
+            produto.addEventListener('click', (event) => {
+                if (event.target.closest('.add-carrinho-btn')) {
+                    return;
+                }
+                const data = produto.dataset;
+                document.getElementById('modal-img').src = data.imagem;
+                document.getElementById('modal-titulo').textContent = data.titulo;
+                document.getElementById('modal-descricao').textContent = data.descricao;
+                document.getElementById('modal-preco').textContent = `R$ ${data.preco}`;
+                modal.style.display = 'flex';
+            });
+        });
+
+        const fecharModal = () => { modal.style.display = 'none'; }
+        modalFechar.addEventListener('click', fecharModal);
+        modal.addEventListener('click', (event) => { if (event.target === modal) fecharModal(); });
+    });
+</script>
+{{/section}}
