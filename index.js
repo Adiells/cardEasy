@@ -9,8 +9,8 @@ const db = require('./database/database')
 const compression = require('compression')
 
 const handlers = require('./lib/handlers')
-const cadastro = require('./lib/cadastro')
-const { isAuthenticated } = require('./lib/middlewares/isAutenticated')
+const { isAuthenticated } = require('./src/middlewares/isAutenticated')
+const authRoutes = require('./src/routes/authRoutes')
 const port = 3000
 
 const app = express()
@@ -67,44 +67,11 @@ app.use((req, res, next) => {
     }
     next()
 })
+app.use(authRoutes)
 
 app.get('/', handlers.home)
 
-app.get('/cadastro', handlers.cadastro)
-app.post('/api/cadastro', (req, res) => {
-    const password = req.body.password
-    const name = limpar(req.body.name)
-    const username = limpar(req.body.username)
-    
-
-    if(!cadastro.isPasswordValid(password)) return res.status(500).json({err: 'sua senha não é usa senha válida'})
-    if(!cadastro.isUsernameValid(username)) return res.status(500).json({err: 'seu username não é um username valido'})
-    console.log(req.body)
-    if(limpar(name).length == 0 || name.length > 40) return res.status(500).json({err: 'seu nome é muito grande'})
-    handlers.api.cadastro(req, res)
-})
 app.get('/api/usuarios/verificar', handlers.api.usersVerify)
-app.get('/login', handlers.login)
-app.post('/api/login', (req, res) => {
-    let username = req.body.username
-    let password = req.body.password
-    if(limpar(username).length == 0 || username.length > 30){
-        return res.status(500).json({err: 'seu nome é muito grande ou vazio'})
-    }else if(limpar(password).length <= 3 || limpar(password).length > 30){
-        return res.status(500).json({err: 'seu nome é muito grande ou vazio'})
-    }
-    handlers.api.login(req, res)
-})
-app.get('/logout', (req, res) => {
-    req.session.destroy(err => {
-        if (err) {
-            console.error('Erro ao destruir a sessão:', err);
-            return res.redirect('/'); 
-        }
-        console.log('Sessão destruída.');
-        res.redirect('/'); 
-    });
-});
 
 app.get('/:username/cadastro-pratos', isAuthenticated, (req, res) => {
     // if (req.session.user && req.session.user.username !== req.params.username) {
