@@ -10,7 +10,9 @@ const compression = require('compression')
 
 const handlers = require('./lib/handlers')
 const { isAuthenticated } = require('./src/middlewares/isAutenticated')
+
 const authRoutes = require('./src/routes/authRoutes')
+const userRoutes = require('./src/routes/userRoutes')
 const port = 3000
 
 const app = express()
@@ -30,10 +32,6 @@ const hbs = expressHandlebars.create({
         }
     }
 });
-
-const limpar = str => str.trimStart().length === 0 ? "" : str.trimStart();
-
-
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.use(compression())
@@ -67,11 +65,11 @@ app.use((req, res, next) => {
     }
     next()
 })
+
 app.use(authRoutes)
+app.use(userRoutes)
 
 app.get('/', handlers.home)
-
-app.get('/api/usuarios/verificar', handlers.api.usersVerify)
 
 app.get('/:username/cadastro-pratos', isAuthenticated, (req, res) => {
     // if (req.session.user && req.session.user.username !== req.params.username) {
@@ -98,16 +96,6 @@ app.post('/api/cadastro-pratos', (req, res) => {
             return res.status(400).json({ erros })
         }
         handlers.api.cadastrarPratos(req, res, fields, files)
-    })
-})
-app.get('/perfil', isAuthenticated, handlers.perfil)
-app.get('/perfil/editar', isAuthenticated, handlers.perfilEditar)
-app.post('/api/perfil/editar', handlers.api.perfilEditar)
-app.post('/api/perfil/foto', (req, res) => {
-    const form = new multiparty.Form()
-    form.parse(req, (err, fields, files) => {
-        if(err) return res.status(500).json({err: err.message})
-        handlers.api.perfilFoto(req, res, fields, files)
     })
 })
 app.get('/restaurantes', handlers.restaurantes)
