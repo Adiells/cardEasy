@@ -1,4 +1,4 @@
-const db = require('../../database/database')
+const db = require('../config/database')
 const bcrypt = require('bcrypt')
 const validation = require('../utils/validation')
 const limpar = str => str.trimStart().length === 0 ? "" : str.trimStart();

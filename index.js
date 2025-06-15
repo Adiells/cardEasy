@@ -5,7 +5,7 @@ const expressHandlebars = require('express-handlebars')
 const BetterSqlite3Store = require('better-sqlite3-session-store')(session)
 const multiparty = require('multiparty')
 const path = require('path')
-const db = require('./database/database')
+const db = require('./src/config/database')
 const compression = require('compression')
 
 const handlers = require('./lib/handlers')
@@ -13,6 +13,7 @@ const { isAuthenticated } = require('./src/middlewares/isAutenticated')
 
 const authRoutes = require('./src/routes/authRoutes')
 const userRoutes = require('./src/routes/userRoutes')
+const pageRoutes = require('./src/routes/pageRoutes')
 const port = 3000
 
 const app = express()
@@ -68,8 +69,7 @@ app.use((req, res, next) => {
 
 app.use(authRoutes)
 app.use(userRoutes)
-
-app.get('/', handlers.home)
+app.use(pageRoutes)
 
 app.get('/:username/cadastro-pratos', isAuthenticated, (req, res) => {
     // if (req.session.user && req.session.user.username !== req.params.username) {
@@ -98,7 +98,6 @@ app.post('/api/cadastro-pratos', (req, res) => {
         handlers.api.cadastrarPratos(req, res, fields, files)
     })
 })
-app.get('/restaurantes', handlers.restaurantes)
 app.get('/restaurantes/:name', handlers.cardapio)
 
 app.use((req, res) => {
