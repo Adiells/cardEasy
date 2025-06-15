@@ -3,13 +3,9 @@ const express = require('express')
 const session = require('express-session')
 const expressHandlebars = require('express-handlebars')
 const BetterSqlite3Store = require('better-sqlite3-session-store')(session)
-const multiparty = require('multiparty')
 const path = require('path')
 const db = require('./src/config/database')
 const compression = require('compression')
-
-const handlers = require('./lib/handlers')
-const { isAuthenticated } = require('./src/middlewares/isAutenticated')
 
 const authRoutes = require('./src/routes/authRoutes')
 const userRoutes = require('./src/routes/userRoutes')
