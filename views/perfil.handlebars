@@ -2,16 +2,18 @@
     <div class="profile-header">
         <div class="profile-avatar">
             <img src="/uploads/profilePhoto/{{data.image_url}}" alt="Nome do Restaurante" id="profile-picture">
+            {{#ifEq user.username data.username}}
             <button class="change-photo-btn">
                 <i class="fas fa-camera"></i> Alterar
             </button>
+            {{/ifEq}}
             <input type="file" id="photo-input" name="foto" accept="image/*" style="display: none;">
         </div>
         <div class="profile-info">
             <h1 id="restaurant-name">{{data.nome}}</h1>
             <p class="username" id="restaurant-username">@{{data.username}}</p>
             <p class="description" id="restaurant-description">{{data.description}}</p>
-            
+            {{#ifEq user.username data.username}}
             <div class="profile-info-actions">
                 <a href="perfil/editar" class="btn-profile-inline edit-action">
                     <i class="fas fa-edit"></i> Editar Perfil
@@ -20,30 +22,39 @@
                     <i class="fas fa-plus-circle"></i> Adicionar Prato
                 </a>
             </div>
+            {{else}}
+            <div class="profile-info-actions">
+                <a href="/restaurantes/{{data.username}}" class="btn-profile-inline edit-action">
+                    <i class="fas fa-edit"></i> Ver cardápio
+                </a>
+            </div>
+            {{/ifEq}}
         </div>
     </div>
+    {{#ifEq data.username user.username}}
     <div id="photo-modal" class="photo-modal" style="display: none;">
-    <div class="photo-modal-content">
-        <span class="photo-modal-close-btn">&times;</span>
-        <h2>Alterar Foto do Perfil</h2>
-        <form id="photo-upload-form" enctype="multipart/form-data">
-            <div class="photo-modal-preview-container">
-                <img id="modal-preview-image" src="#" alt="Pré-visualização da nova foto" style="display: none;">
-                <p id="modal-no-preview-text">Nenhuma imagem selecionada</p>
-            </div>
-            <div class="photo-modal-actions">
-                <input type="file" id="foto" name="foto" accept="image/*" style="display: none;">
-                <button type="button" id="modal-choose-photo-btn" class="btn-profile-inline edit-action">
-                    Escolher Arquivo
-                </button>
-                <button type="submit" id="modal-save-photo-btn" class="btn-profile-inline add-action" disabled>
-                    Salvar Alterações
-                </button>
-                <button type="button" id="modal-cancel-btn" class="btn-profile-inline">Cancelar</button>
-            </div>
-        </form>
+        <div class="photo-modal-content">
+            <span class="photo-modal-close-btn">&times;</span>
+            <h2>Alterar Foto do Perfil</h2>
+            <form id="photo-upload-form" enctype="multipart/form-data">
+                <div class="photo-modal-preview-container">
+                    <img id="modal-preview-image" src="#" alt="Pré-visualização da nova foto" style="display: none;">
+                    <p id="modal-no-preview-text">Nenhuma imagem selecionada</p>
+                </div>
+                <div class="photo-modal-actions">
+                    <input type="file" id="foto" name="foto" accept="image/*" style="display: none;">
+                    <button type="button" id="modal-choose-photo-btn" class="btn-profile-inline edit-action">
+                        Escolher Arquivo
+                    </button>
+                    <button type="submit" id="modal-save-photo-btn" class="btn-profile-inline add-action" disabled>
+                        Salvar Alterações
+                    </button>
+                    <button type="button" id="modal-cancel-btn" class="btn-profile-inline">Cancelar</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+    {{/ifEq}}
 
     {{!-- Stats container --}}
     <div class="stats-container">
@@ -66,7 +77,7 @@
             </div>
         </div>
     </div>
-
+    {{#ifEq user.username data.username}}
     {{!-- Actions container --}}
     <div class="actions-container">
         <a href="#" class="action-btn"> 
@@ -79,6 +90,7 @@
             <i class="fas fa-file-invoice-dollar"></i> Ver Relatórios
         </a>
     </div>
+    {{/ifEq}}
 </section>
 
 <style>

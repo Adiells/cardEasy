@@ -12,5 +12,6 @@ router.post('/api/perfil/foto', isAuthenticated, userController.updateProfilePho
 
 // rotas publicas 
 router.get('/api/usuarios/verificar', userController.checkUsernameAvailability)
+router.get('/perfil/:username', userController.renderPublicProfilePage)
 
 module.exports = router

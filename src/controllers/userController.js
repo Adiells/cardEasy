@@ -32,6 +32,19 @@ exports.renderEditProfilePage = (req, res) => {
         res.status(500).json({Err: 'Erro ao carregar edição de perfil'})
     }
 }
+exports.renderPublicProfilePage = (req, res) => {
+    let username = req.params.username
+    try{
+        let userStmt = db.prepare('SELECT description, nome, username, image_url, id FROM users WHERE username = ?')
+        let userData = userStmt.get(username)
+        let countStmt = db.prepare('SELECT COUNT(*) AS total FROM pratos WHERE restaurante_id = ?');
+        let dishCount = countStmt.get(userData.id);
+        res.render('perfil', { data: userData, count: dishCount })
+    }catch(err){
+        console.log('houve um erro ao tentar carregar os dados do banco de dados', err)
+        res.status(500).json({Err: 'Erro ao carregar perfil'})
+    } 
+}
 // Fim da renderização das páginas
 
 // Inicio da lócica de processamento
