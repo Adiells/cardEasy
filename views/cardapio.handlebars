@@ -26,14 +26,14 @@
                 </div>
                 <div class="action">
                     {{#if ../isOwner}}
-                    <button class="action-btn">
+                    <button class="action-btn" title="Editar produto">
                         <i class="fas fa-pencil-alt"></i>
                     </button>
-                    <button class="action-btn" title="Apagar produto">
+                    <button class="action-btn" title="Apagar produto" id="delete_btn">
                         <i class="fas fa-trash"></i>
                     </button>
                     {{/if}}
-                    <button class="action-btn" title="Adicionar ao carrinho">
+                    <button class="action-btn" title="Adicionar ao carrinho" id="add_carrinho">
                         <i class="fas fa-shopping-cart"></i>
                     </button>
                 </div>
@@ -56,6 +56,20 @@
                 <button class="add-carrinho-btn-modal">
                     <i class="fas fa-shopping-cart"></i>
                     Adicionar ao Carrinho
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-delete" class="modal-overlay">
+    <div class="modal-conteudo">
+        <button class="modal-fechar">&times;</button>
+        <div class="modal-info">
+            <h2 id="modal-titulo">Tem certeza que deseja excluir esse produto?</h2>
+            <div class="modal-acao">
+                <button class="add-carrinho-btn-modal">
+                    Deletar
                 </button>
             </div>
         </div>
@@ -188,27 +202,34 @@
         });
 
         // --- LÓGICA DO MODAL DE PRODUTO ---
-        const modal = document.getElementById('modal-produto');
-        const modalFechar = document.querySelector('.modal-fechar');
+        const modalProduto = document.getElementById('modal-produto');
+        const modalDelete = document.querySelector('#modal-delete')
+        const modalFechar = document.querySelectorAll('.modal-fechar')
+        console.log(modalFechar)
         
         todosProdutos.forEach(produto => {
             // Adiciona o listener ao card 
             produto.addEventListener('click', (event) => {
-                if (event.target.closest('.add-carrinho-btn')) {
-                    return;
+                if (event.target.closest('#add_carrinho')) {
+                    const data = produto.dataset;
+                    document.getElementById('modal-img').src = data.imagem;
+                    document.getElementById('modal-titulo').textContent = data.titulo;
+                    document.getElementById('modal-descricao').textContent = data.descricao;
+                    document.getElementById('modal-preco').textContent = `R$ ${data.preco}`;
+                    modalProduto.style.display = 'flex';                    
+                }else if (event.target.closest('#delete_btn')){
+                    modalDelete.style.display = 'flex';
                 }
-                const data = produto.dataset;
-                document.getElementById('modal-img').src = data.imagem;
-                document.getElementById('modal-titulo').textContent = data.titulo;
-                document.getElementById('modal-descricao').textContent = data.descricao;
-                document.getElementById('modal-preco').textContent = `R$ ${data.preco}`;
-                modal.style.display = 'flex';
             });
         });
+        function fecharModal(modal){ 
+                return modal.style.display = 'none' 
+        }
+        modalFechar[0].addEventListener('click', () => fecharModal(modalProduto));
+        modalProduto.addEventListener('click', (event) => { if (event.target === modalProduto) fecharModal(modalProduto); });
 
-        const fecharModal = () => { modal.style.display = 'none'; }
-        modalFechar.addEventListener('click', fecharModal);
-        modal.addEventListener('click', (event) => { if (event.target === modal) fecharModal(); });
+        modalFechar[1].addEventListener('click', () => fecharModal(modalDelete));
+        modalDelete.addEventListener('click', (event) => { if (event.target === modalDelete) fecharModal(modalDelete); });
     });
 </script>
 {{/section}}
