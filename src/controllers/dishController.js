@@ -11,43 +11,51 @@ exports.renderNewDishPage = (req, res) => {
 
 exports.renderMenuPage = (req, res) => {
     const username = req.params.name
-    const stmt = db.prepare(`
-        SELECT pratos.restaurante_id, pratos.titulo, pratos.preco, pratos.descricao, pratos.imagem, pratos.categoria, users.username, users.nome, users.description, users.image_url
+    const pratos = db.prepare(`
+        SELECT pratos.restaurante_id, pratos.id, pratos.titulo, pratos.preco, pratos.descricao, pratos.imagem, pratos.categoria
         FROM pratos
         JOIN users ON pratos.restaurante_id = users.id
         WHERE users.username = ?
     `)
 
-    let result = stmt.all(username)
-    if(result.length === 0){
-        return res.render('404')
-    }
-    const restauranteInfo = {
-        nome: result[0].nome,
-        description: result[0].description,
-        image_url: result[0].image_url
-    }
-    const produtos = result.map(item => {
-        return {
-            titulo: item.titulo,
-            preco: item.preco,
-            descricao: item.descricao,
-            imagem: `${item.restaurante_id}/${item.imagem}`,
-            categoria: item.categoria
-        }
-    })
-    const categoriasU = [...new Set(result.map(item => item.categoria))]
-    const categorias = categoriasU.reduce((newArray, currentValue) => {
-        if(currentValue) newArray.push({categoria: currentValue})
-        return newArray
-    }, [])
+    const users = db.prepare(`
+        SELECT users.username, users.nome, users.description, users.image_url
+        FROM users
+        WHERE users.username = ?
+        `)
+
+    let resultPratos = pratos.all(username)
+    let resultUsers = users.get(username)
+    let produtos = []
+    let categorias = []
+    let vazio = {vazio: false}
+    if(resultPratos.length !== 0){
+        produtos = resultPratos.map(item => {
+                return {
+                    id: item.id,
+                    titulo: item.titulo,
+                    preco: item.preco,
+                    descricao: item.descricao,
+                    imagem: `${item.restaurante_id}/${item.imagem}`,
+                    categoria: item.categoria
+                }
+            })
+            const categoriasU = [...new Set(resultPratos.map(item => item.categoria))]
+            categorias = categoriasU.reduce((newArray, currentValue) => {
+                if(currentValue) newArray.push({categoria: currentValue})
+                return newArray
+            }, [])
+    }else vazio.vazio = true
+    
     const isOwner = (username === req.session?.user?.username)
     const context = {
-        restaurante: restauranteInfo,
+        restaurante: resultUsers,
         produtos,
         categorias,
-        isOwner
+        isOwner,
+        vazio
     }
+    console.log(context)
     res.render('cardapio', context)
 }
 // Fim da renderização das páginas
@@ -108,4 +116,15 @@ exports.processNewDish = async (req, res) => {
         res.status(500).json({ error: 'Erro interno ao processar o cadastro do prato.' });
     }
 };
+exports.processDeleteDish = (req, res) => {
+    id = req.body.id
+    stmt = db.prepare('DELETE FROM pratos WHERE id = ?')
+    try{
+        stmt.run(id)
+        console.log('Apagado')
+    }catch{
+        console.error('Erro ao tentar deletar')
+    }
+    res.status(200).json({message: 'ok'})
+}
 // Fim da lógica de processamento

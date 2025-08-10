@@ -10,4 +10,6 @@ router.get('/restaurantes/:name', dishController.renderMenuPage);
 router.get('/:username/cadastro-pratos', isAuthenticated, dishController.renderNewDishPage);
 router.post('/api/cadastro-pratos', isAuthenticated, dishController.processNewDish);
 
+router.delete('/deletar-pratos', dishController.processDeleteDish)
+
 module.exports = router;

@@ -8,6 +8,12 @@
         </div>
     </section>
 
+    {{#if vazio.vazio}}
+    <div class="empty-menu">
+        <p>O cardápio ainda não foi adicionado. Volte mais tarde!</p>
+    </div>
+    {{else}}
+
     <section class="categorias">
         <button class="categoria-btn active" data-categoria="todos">Todos</button>
         {{#each categorias}}
@@ -17,7 +23,7 @@
 
     <section class="produtos-grid">
         {{#each produtos}}
-        <div class="produto-card" data-categoria="{{this.categoria}}" data-titulo="{{this.titulo}}" data-preco="{{this.preco}}" data-descricao="{{this.descricao}}" data-imagem="/uploads/Restaurante{{this.imagem}}">
+        <div class="produto-card" data-categoria="{{this.categoria}}" data-titulo="{{this.titulo}}" data-preco="{{this.preco}}" data-descricao="{{this.descricao}}" data-imagem="/uploads/Restaurante{{this.imagem}}" data-id="{{this.id}}">
             <img src="/uploads/Restaurante{{this.imagem}}" alt="{{this.titulo}}">
             <div class="produto-info">
                 <div class="produto-texto">
@@ -41,6 +47,7 @@
         </div>
         {{/each}}
     </section>
+    {{/if}}
 
 </div>
 
@@ -68,7 +75,7 @@
         <div class="modal-info">
             <h2 id="modal-titulo">Tem certeza que deseja excluir esse produto?</h2>
             <div class="modal-acao">
-                <button class="add-carrinho-btn-modal">
+                <button class="add-carrinho-btn-modal" id="button-delete">
                     Deletar
                 </button>
             </div>
@@ -149,8 +156,17 @@
     .action-btn:hover {
         background-color: var(--cor-principal);
         color: var(--fundo);
-    }
-    
+    }.empty-menu {
+        text-align: center;
+        padding: 2rem;
+        background-color: var(--fundo-card); /* Fundo similar aos cards existentes */
+        border: 1px solid var(--borda); /* Borda similar */
+        border-radius: 8px;
+        margin-top: 2rem; /* Espaço do topo */
+        color: var(--texto-secundario); /* Cor de texto discreta */
+        font-style: italic;
+        }
+            
     /* 4. Modal */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: none; align-items: center; justify-content: center; z-index: 1000; }
     .modal-conteudo { background: var(--fundo-card); padding: 2rem; border-radius: 8px; position: relative; width: 90%; max-width: 500px; }
@@ -185,6 +201,7 @@
 
 </style>
 {{#section 'script'}}
+<script src="/js/showToast.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const botoesCategoria = document.querySelectorAll('.categoria-btn');
@@ -201,11 +218,29 @@
             });
         });
 
+        function deletarPrato(id){
+            fetch('/deletar-pratos', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({id})
+            })
+             .then(response => {
+                if (response.ok){
+                    showToast(`Sucesso ao deletar prato!`)
+                    window.location.reload()
+                }else{
+                    showToast(`Houve um erro ${err}`, true)
+                }
+            })
+             .catch(error => console.log('Erro na requisição', error))
+        }
+            
         // --- LÓGICA DO MODAL DE PRODUTO ---
         const modalProduto = document.getElementById('modal-produto');
         const modalDelete = document.querySelector('#modal-delete')
         const modalFechar = document.querySelectorAll('.modal-fechar')
-        console.log(modalFechar)
         
         todosProdutos.forEach(produto => {
             // Adiciona o listener ao card 
@@ -220,6 +255,10 @@
                 }else if (event.target.closest('#delete_btn')){
                     modalDelete.style.display = 'flex';
                 }
+                document.getElementById('button-delete').addEventListener('click', () => {
+                    deletarPrato(produto.dataset.id)
+                    modalDelete.style.display = 'none'
+                })
             });
         });
         function fecharModal(modal){ 
