@@ -1,4 +1,5 @@
-function processFormRequest(formId, apiRouter, successMessage, fieldNamesArray, multiparty=false){
+function processFormRequest(formId, apiRouter, successMessage, fieldNamesArray, multiparty=false, method='POST', exc=false){
+    console.log('chegou no process form request')
     formId.addEventListener('submit', evt => {
         evt.preventDefault()
         let body
@@ -20,7 +21,7 @@ function processFormRequest(formId, apiRouter, successMessage, fieldNamesArray, 
         }else{
             body = new FormData(evt.target)
         }
-        fetch(apiRouter, {method: 'POST', body, headers: headers})
+        fetch(apiRouter, {method: method, body, headers: headers})
             .then(resp => {
                 return resp.json()
                 .then(json => {
@@ -32,6 +33,9 @@ function processFormRequest(formId, apiRouter, successMessage, fieldNamesArray, 
             })
             .then(json => {
                 showToast(successMessage)
+                if(exc){//gambiarra, concertarei em breve
+                    document.querySelector('#modal-edit').style.display = 'none'
+                }
                 if(json.redirect){
                     window.location.href = json.redirect
                 }

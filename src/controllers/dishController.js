@@ -55,7 +55,6 @@ exports.renderMenuPage = (req, res) => {
         isOwner,
         vazio
     }
-    console.log(context)
     res.render('cardapio', context)
 }
 // Fim da renderização das páginas
